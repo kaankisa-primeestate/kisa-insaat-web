@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { MapPin, Phone, Mail, Instagram, Linkedin, Facebook } from "lucide-react";
+import { MapPin, Phone, Mail, Globe } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -20,14 +20,14 @@ export default function Footer() {
             Kadıköy Bostancı merkezli, kentsel dönüşüm ve nitelikli konut projelerinde güvenilir, çağdaş ve estetik mimari çözümler sunuyoruz.
           </p>
           <div className="flex items-center gap-3 pt-2">
-            <a href="#" className="w-8 h-8 rounded bg-slate-900 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors">
-              <Instagram className="w-4 h-4" />
+            <a href="#" className="w-8 h-8 rounded bg-slate-900 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors text-xs font-bold text-slate-300">
+              IG
             </a>
-            <a href="#" className="w-8 h-8 rounded bg-slate-900 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors">
-              <Linkedin className="w-4 h-4" />
+            <a href="#" className="w-8 h-8 rounded bg-slate-900 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors text-xs font-bold text-slate-300">
+              IN
             </a>
-            <a href="#" className="w-8 h-8 rounded bg-slate-900 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors">
-              <Facebook className="w-4 h-4" />
+            <a href="#" className="w-8 h-8 rounded bg-slate-900 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors text-xs font-bold text-slate-300">
+              FB
             </a>
           </div>
         </div>
