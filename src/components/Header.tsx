@@ -21,19 +21,24 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        !isHomePage || isScrolled
-          ? "bg-slate-900/98 backdrop-blur-md py-4 shadow-2xl border-b border-slate-800"
-          : "bg-gradient-to-b from-slate-950/90 via-slate-950/50 to-transparent py-5"
+      className={`w-full z-50 transition-all duration-300 ${
+        isHomePage
+          ? `fixed top-0 left-0 ${
+              isScrolled
+                ? "bg-slate-950/95 backdrop-blur-md py-4 shadow-2xl border-b border-slate-800/80"
+                : "bg-gradient-to-b from-slate-950/90 via-slate-950/40 to-transparent py-6"
+            }`
+          : "sticky top-0 bg-slate-950 border-b border-slate-800/80 py-4 shadow-xl"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        {/* Sol Logo ve Ana Sayfa / Geri Alanı */}
+        
+        {/* Sol Logo & Sayfa İçi Navigasyon */}
         <div className="flex items-center gap-4">
           {!isHomePage && (
             <Link
               href="/"
-              className="flex items-center gap-1 text-xs text-amber-500 hover:text-amber-400 font-semibold bg-slate-800/80 hover:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700/60 transition-all"
+              className="flex items-center gap-1.5 text-xs text-amber-500 hover:text-amber-400 font-semibold bg-slate-900 hover:bg-slate-850 px-3 py-1.5 rounded-lg border border-slate-800 transition-all"
               title="Ana Sayfaya Dön"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
@@ -103,7 +108,7 @@ export default function Header() {
           </a>
           <a
             href="tel:+902163529794"
-            className="flex items-center gap-2 border border-slate-700 hover:border-amber-500 text-slate-200 hover:text-white text-xs font-semibold px-3.5 py-2 rounded-md transition-all"
+            className="flex items-center gap-2 border border-slate-800 hover:border-amber-500 text-slate-200 hover:text-white text-xs font-semibold px-3.5 py-2 rounded-md transition-all bg-slate-900/50"
           >
             <Phone className="w-3.5 h-3.5 text-amber-500" />
             <span>0216 352 97 94</span>
@@ -121,47 +126,23 @@ export default function Header() {
 
       {/* Mobil Menü */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-slate-900 border-b border-slate-800 px-6 py-6 space-y-4">
-          <Link
-            href="/"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-slate-200 hover:text-amber-500 font-medium"
-          >
+        <div className="md:hidden bg-slate-950 border-b border-slate-800 px-6 py-6 space-y-4">
+          <Link href="/" onClick={() => setMobileMenuOpen(false)} className="block text-slate-200 hover:text-amber-500 font-medium">
             Ana Sayfa
           </Link>
-          <Link
-            href="/kurumsal"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-slate-200 hover:text-amber-500 font-medium"
-          >
+          <Link href="/kurumsal" onClick={() => setMobileMenuOpen(false)} className="block text-slate-200 hover:text-amber-500 font-medium">
             Kurumsal
           </Link>
-          <Link
-            href="/projeler"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-slate-200 hover:text-amber-500 font-medium"
-          >
+          <Link href="/projeler" onClick={() => setMobileMenuOpen(false)} className="block text-slate-200 hover:text-amber-500 font-medium">
             Projelerimiz
           </Link>
-          <Link
-            href="/satistaki-gayrimenkuller"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-slate-200 hover:text-amber-500 font-medium"
-          >
+          <Link href="/satistaki-gayrimenkuller" onClick={() => setMobileMenuOpen(false)} className="block text-slate-200 hover:text-amber-500 font-medium">
             Satıştaki Daireler
           </Link>
-          <Link
-            href="/kentsel-donusum"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-slate-200 hover:text-amber-500 font-medium"
-          >
+          <Link href="/kentsel-donusum" onClick={() => setMobileMenuOpen(false)} className="block text-slate-200 hover:text-amber-500 font-medium">
             Kentsel Dönüşüm
           </Link>
-          <Link
-            href="/iletisim"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-slate-200 hover:text-amber-500 font-medium"
-          >
+          <Link href="/iletisim" onClick={() => setMobileMenuOpen(false)} className="block text-slate-200 hover:text-amber-500 font-medium">
             İletişim
           </Link>
         </div>
