@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { MapPin, Phone, Mail, Globe } from "lucide-react";
 
@@ -8,14 +9,13 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
         {/* Kolon 1: Logo ve Kısa Hakkımızda */}
         <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-amber-600 rounded flex items-center justify-center font-bold text-white text-lg">
-              K
-            </div>
-            <span className="text-lg font-bold tracking-wider text-white uppercase">
-              KISA İNŞAAT
-            </span>
-          </div>
+          <Image
+            src="/logo-white.png"
+            alt="Kısa İnşaat"
+            width={1046}
+            height={197}
+            className="h-8 w-auto"
+          />
           <p className="text-sm leading-relaxed text-slate-400">
             Kadıköy Bostancı merkezli, kentsel dönüşüm ve nitelikli konut projelerinde güvenilir, çağdaş ve estetik mimari çözümler sunuyoruz.
           </p>

@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
+import { heroImages } from "@/content/hero";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Building, ShieldCheck, MapPin } from "lucide-react";
 
@@ -10,7 +11,7 @@ export default function Home() {
       <Header />
       
       <main>
-        <Hero />
+        <Hero images={heroImages} />
 
         {/* Kurumsal Özet / Neden Kısa İnşaat */}
         <section className="py-24 bg-slate-900/50 border-y border-slate-900">

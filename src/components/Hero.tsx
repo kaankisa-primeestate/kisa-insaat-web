@@ -1,35 +1,122 @@
-import React from "react";
-import Link from "next/link";
-import { ChevronRight, Building2, Home } from "lucide-react";
+"use client";
 
-export default function Hero() {
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Building2, ChevronRight, Home } from "lucide-react";
+import type { HeroImage } from "@/content/hero";
+
+const SLIDE_INTERVAL_MS = 7000;
+
+/**
+ * Fotograf yokken gosterilen tasarimli arka plan. Logodaki kule simgesi ve
+ * ince bir mimari izgara kullanir; boylece hero bos veya kirik gorunmez.
+ */
+function DesignedBackdrop() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-slate-950 overflow-hidden pt-20">
-      {/* Arka Plan Görsel Katmanı & Overlay */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40 scale-105 transition-transform duration-10000"
+    <div className="absolute inset-0" aria-hidden>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_25%_15%,#1e293b_0%,#0b1220_45%,#020617_100%)]" />
+      <div
+        className="absolute inset-0 opacity-[0.06]"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1920&auto=format&fit=crop')`,
+          backgroundImage:
+            "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+          backgroundSize: "72px 72px",
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/30" />
+      <div className="absolute -right-8 bottom-0 w-[60%] max-w-2xl opacity-[0.07]">
+        <Image
+          src="/logo-mark-white.png"
+          alt=""
+          width={258}
+          height={195}
+          className="w-full h-auto"
+          priority
+        />
+      </div>
+    </div>
+  );
+}
 
-      {/* İçerik */}
+export default function Hero({ images = [] }: { images?: HeroImage[] }) {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    if (images.length < 2) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const timer = window.setInterval(
+      () => setActive((i) => (i + 1) % images.length),
+      SLIDE_INTERVAL_MS,
+    );
+    return () => window.clearInterval(timer);
+  }, [images.length]);
+
+  return (
+    <section className="relative min-h-screen flex items-center justify-center bg-slate-950 overflow-hidden pt-20">
+      {/* Arka plan katmani */}
+      <div className="absolute inset-0">
+        {images.length > 0 ? (
+          images.map((image, index) => (
+            <div
+              key={image.src}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-out ${
+                index === active ? "opacity-100" : "opacity-0"
+              }`}
+              aria-hidden={index !== active}
+            >
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                sizes="100vw"
+                priority={index === 0}
+                className="object-cover hero-slide-image"
+              />
+            </div>
+          ))
+        ) : (
+          <DesignedBackdrop />
+        )}
+      </div>
+
+      {/*
+       * Okunabilirlik perdesi. Hangi fotograf yuklenirse yuklensin baslik ve
+       * butonlarin kontrasti garanti altina alinir; acik veya kalabalik bir
+       * gorsel tasarimi bozamaz.
+       */}
+      <div className="absolute inset-0 bg-slate-950/40" aria-hidden />
+      <div
+        className="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-slate-950/25 to-slate-950"
+        aria-hidden
+      />
+      <div
+        className="absolute inset-0"
+        aria-hidden
+        style={{
+          background:
+            "radial-gradient(ellipse 75% 55% at 50% 45%, transparent 0%, rgba(2,6,23,0.6) 100%)",
+        }}
+      />
+
+      {/* Icerik */}
       <div className="relative max-w-5xl mx-auto px-6 text-center text-white z-10 py-24">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-6 backdrop-blur-sm">
           <Building2 className="w-3.5 h-3.5" />
           <span>Kadıköy Bostancı&apos;nın Prestijli Yapıları</span>
         </div>
 
-        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6 font-sans">
+        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6 font-sans drop-shadow-[0_2px_24px_rgba(2,6,23,0.9)]">
           Geleceği İnşa Ediyoruz, <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-200 to-amber-500">
             Kalıcı Değerler
-          </span> Sunuyoruz.
+          </span>{" "}
+          Sunuyoruz.
         </h1>
 
-        <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
-          Kısa İnşaat güvencesiyle Bostancı ve çevresinde modern mimari, yüksek deprem güvenliği ve estetik yaşam alanları üretiyoruz.
+        <p className="text-lg md:text-xl text-slate-200 max-w-2xl mx-auto mb-10 leading-relaxed font-light drop-shadow-[0_2px_12px_rgba(2,6,23,0.9)]">
+          Kısa İnşaat güvencesiyle Bostancı ve çevresinde modern mimari, yüksek
+          deprem güvenliği ve estetik yaşam alanları üretiyoruz.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -42,13 +129,33 @@ export default function Hero() {
           </Link>
           <Link
             href="/projeler"
-            className="w-full sm:w-auto flex items-center justify-center gap-2 border border-slate-700 hover:border-slate-500 bg-slate-900/60 text-slate-200 hover:text-white font-semibold px-8 py-4 rounded-md backdrop-blur-sm transition-all"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 border border-slate-600 hover:border-slate-400 bg-slate-900/60 text-slate-100 hover:text-white font-semibold px-8 py-4 rounded-md backdrop-blur-sm transition-all"
           >
             <span>Devam Eden Projelerimiz</span>
             <ChevronRight className="w-4 h-4 text-amber-500" />
           </Link>
         </div>
       </div>
+
+      {/* Slayt gostergeleri */}
+      {images.length > 1 && (
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2">
+          {images.map((image, index) => (
+            <button
+              key={image.src}
+              type="button"
+              onClick={() => setActive(index)}
+              aria-label={`${index + 1}. görsele geç`}
+              aria-current={index === active}
+              className={`h-1 rounded-full transition-all ${
+                index === active
+                  ? "w-10 bg-amber-500"
+                  : "w-5 bg-white/40 hover:bg-white/70"
+              }`}
+            />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

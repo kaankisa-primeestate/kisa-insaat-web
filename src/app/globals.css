@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
+/*
+ * Site tek bir koyu temaya sahiptir. Onceki surumdeki acik/koyu tema
+ * degiskenleri kullanilmiyordu ve ilk yuklemede beyaz parlama yaratiyordu.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #020617; /* slate-950 */
+  --foreground: #f1f5f9; /* slate-100 */
 }
 
 @theme inline {
@@ -12,15 +16,32 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+/*
+ * Hero fotograflarina cok yavas bir yakinlasma/uzaklasma verir. Sonsuz ve
+ * alternate oldugu icin slayt degistiginde yeniden tetiklenmesi gerekmez.
+ */
+@keyframes hero-ken-burns {
+  from {
+    transform: scale(1.03);
+  }
+  to {
+    transform: scale(1.13);
+  }
+}
+
+.hero-slide-image {
+  animation: hero-ken-burns 18000ms ease-in-out infinite alternate;
+}
+
+/* Hareketi azaltilmis tercih eden kullanicilarda animasyon kapatilir */
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide-image {
+    animation: none;
+  }
 }

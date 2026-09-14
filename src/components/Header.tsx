@@ -26,24 +26,32 @@ export default function Header() {
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative w-10 h-10 shrink-0">
-            <Image 
-              src="/logo.png" 
-              alt="Kısa İnşaat Logo" 
-              fill 
-              className="object-contain rounded"
-              priority 
-            />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-xl font-bold tracking-wider text-white uppercase font-sans">
-              KISA İNŞAAT
+        {/*
+          Logo 1046x197 oranindadir; kare bir kutuya sokuldugunda okunmaz hale
+          gelir. Bu nedenle yukseklik sabitlenip genislik serbest birakilir.
+          Logo zaten "KISA" yazdigi icin yanina ayni yazi tekrarlanmaz;
+          sadece tamamlayici "Insaat" satiri eklenir.
+        */}
+        <Link href="/" className="flex items-center gap-4 group shrink-0">
+          <Image
+            src="/logo-white.png"
+            alt="Kısa İnşaat"
+            width={1046}
+            height={197}
+            priority
+            className={`w-auto transition-all duration-300 ${
+              isScrolled ? "h-7 md:h-8" : "h-8 md:h-10"
+            }`}
+          />
+          <span className="hidden sm:block w-px h-8 bg-slate-700 group-hover:bg-amber-500/60 transition-colors" />
+          <span className="hidden sm:flex flex-col leading-tight">
+            <span className="text-sm font-semibold tracking-[0.2em] text-white uppercase">
+              İnşaat
             </span>
             <span className="text-[10px] tracking-widest text-amber-500 uppercase">
               Bostancı · Kadıköy
             </span>
-          </div>
+          </span>
         </Link>
 
         {/* Masaüstü Menü */}
