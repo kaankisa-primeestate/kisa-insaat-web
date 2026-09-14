@@ -18,7 +18,7 @@ export default function Hero() {
       <div className="relative max-w-5xl mx-auto px-6 text-center text-white z-10 py-24">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-6">
           <Building2 className="w-3.5 h-3.5" />
-          <span>Kadıköy Bostancı'nın Prestijli Yapıları</span>
+          <span>Kadıköy Bostancı&apos;nın Prestijli Yapıları</span>
         </div>
 
         <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6 font-sans">

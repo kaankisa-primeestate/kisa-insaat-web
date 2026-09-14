@@ -20,7 +20,7 @@ export default function Home() {
                 Kısa İnşaat Hakkında
               </div>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white leading-snug">
-                Bostancı'da Güvenli ve Modern Mimari Standartları
+                Bostancı&apos;da Güvenli ve Modern Mimari Standartları
               </h2>
               <p className="text-slate-300 leading-relaxed text-base">
                 Yılların tecrübesiyle Kadıköy bölgesinde kentsel dönüşüm ve konut projeleri üreten Kısa İnşaat; mühendislik disiplini, deprem yönetmeliğine %100 uyum ve yüksek malzeme kalitesiyle güven inşa etmektedir.
