@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Phone, MessageCircle, Menu, X } from "lucide-react";
@@ -25,9 +26,15 @@ export default function Header() {
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-amber-600 rounded flex items-center justify-center font-bold text-white text-xl tracking-wider">
-            K
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="relative w-10 h-10 shrink-0">
+            <Image 
+              src="/logo.png" 
+              alt="Kısa İnşaat Logo" 
+              fill 
+              className="object-contain rounded"
+              priority 
+            />
           </div>
           <div className="flex flex-col">
             <span className="text-xl font-bold tracking-wider text-white uppercase font-sans">
