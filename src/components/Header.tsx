@@ -51,14 +51,9 @@ export default function Header({ settings }: { settings: SiteSettings }) {
               isScrolled ? "h-7 md:h-8" : "h-8 md:h-10"
             }`}
           />
-          <span className="hidden sm:block w-px h-8 bg-slate-700 group-hover:bg-amber-500/60 transition-colors" />
-          <span className="hidden sm:flex flex-col leading-tight">
-            <span className="text-sm font-semibold tracking-[0.2em] text-white uppercase">
-              İnşaat
-            </span>
-            <span className="text-[10px] tracking-widest text-amber-500 uppercase">
-              Türkiye Geneli
-            </span>
+          <span className="hidden sm:block w-px h-7 bg-slate-700 group-hover:bg-amber-500/60 transition-colors" />
+          <span className="hidden sm:block text-sm font-semibold tracking-[0.22em] text-white uppercase">
+            İnşaat
           </span>
         </Link>
 
