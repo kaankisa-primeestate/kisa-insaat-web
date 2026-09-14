@@ -187,10 +187,9 @@ export default defineType({
 
     galleryField("images", "Gayrimenkul Görselleri", "card", {
       group: "gorseller",
-      min: 1,
       max: 20,
       description:
-        "En az 1, en fazla 20 görsel. İlk görsel kartta kapak olarak kullanılır.",
+        "En fazla 20 görsel. İlk görsel kartta kapak olarak kullanılır. Boş bırakılırsa yer tutucu gösterilir; ilan yine de yayınlanır.",
     }),
     imageField("floorPlan", "Kat Planı", "plan", {
       group: "gorseller",

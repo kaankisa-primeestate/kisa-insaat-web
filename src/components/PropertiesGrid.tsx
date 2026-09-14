@@ -170,14 +170,12 @@ export default function PropertiesGrid({
                 className="bg-slate-900 rounded-xl overflow-hidden border border-slate-800 hover:border-slate-700 transition-all flex flex-col group"
               >
                 <div className="relative h-64 overflow-hidden">
-                  {property.images?.[0] && (
-                    <SanityImg
-                      image={property.images[0]}
-                      alt={property.title}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  )}
+                  <SanityImg
+                    image={property.images?.[0]}
+                    alt={property.title}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                   {property.projectTitle && (
                     <div className="absolute top-4 left-4">
                       <span className="px-3 py-1 rounded-md bg-slate-950/80 text-amber-400 text-xs font-bold border border-amber-500/30 backdrop-blur-md">

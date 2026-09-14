@@ -4,11 +4,11 @@ import { IMAGE_RULES, imageQuality } from "./validators";
 type Preset = keyof typeof IMAGE_RULES;
 
 const ALT_DESCRIPTION =
-  "Gorselde ne olduğunu kısaca yazın. Google aramalarında ve ekran okuyucularda kullanılır.";
+  "Görselde ne olduğunu kısaca yazın. Google aramalarında ve ekran okuyucularda kullanılır.";
 
 /**
- * Tekil gorsel alani. Hotspot acik oldugu icin odak noktasi panelden isaretlenir
- * ve kirpma her ekran boyutunda otomatik dogru yapilir.
+ * Tekil görsel alanı. Hotspot açık olduğu için odak noktası panelden
+ * işaretlenir ve kırpma her ekran boyutunda otomatik doğru yapılır.
  */
 export function imageField(
   name: string,
@@ -34,17 +34,17 @@ export function imageField(
       }),
     ],
     validation: (Rule) => {
-      const check = Rule.custom(
+      const base = required ? Rule.required() : Rule;
+      return base.custom(
         imageQuality(rules, { checkAspectRatio: preset !== "plan" }),
       );
-      return required ? check.required() : check;
     },
   });
 }
 
 /**
- * Gorsel galerisi alani. Alt ve ust adet siniri, sayfanin bos kalmasini da
- * asiri sismesini de engeller.
+ * Görsel galerisi alanı. Alt ve üst adet sınırı, sayfanın boş kalmasını da
+ * aşırı şişmesini de engeller.
  */
 export function galleryField(
   name: string,

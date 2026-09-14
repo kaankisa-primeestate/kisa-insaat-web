@@ -103,9 +103,8 @@ export default defineType({
 
     imageField("mainImage", "Kapak Görseli", "hero", {
       group: "gorseller",
-      required: true,
       description:
-        "Proje kartinda ve detay sayfasinin üstünde kullanılır. Yatay, yuksek çözünürlüklü bir görsel seçin.",
+        "Proje kartında ve detay sayfasının üstünde kullanılır. Boş bırakılırsa yerine logodan üretilmiş nötr bir yer tutucu gösterilir; proje yine de yayınlanır.",
     }),
     galleryField("gallery", "Görsel Galerisi", "card", {
       group: "gorseller",

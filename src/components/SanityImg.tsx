@@ -3,7 +3,8 @@ import { urlFor } from "@/sanity/image";
 import type { SanityImage } from "@/sanity/types";
 
 type Props = {
-  image: SanityImage;
+  /** Panelden gelen görsel. Eksik olabilir; bu durumda yer tutucu çizilir. */
+  image?: SanityImage | null;
   /** Boş bırakılırsa panelde girilen alt metin kullanılır. */
   alt?: string;
   sizes: string;
@@ -12,6 +13,34 @@ type Props = {
   /** Kaynak görselin istenecek genişliği. Yükseklik orana göre hesaplanır. */
   width?: number;
 };
+
+/** Görselin gerçekten yüklenmiş bir dosyaya işaret edip etmediğini denetler. */
+function hasAsset(image?: SanityImage | null): image is SanityImage {
+  if (!image || typeof image !== "object") return false;
+  const asset = (image as { asset?: { _ref?: string } }).asset;
+  return Boolean(asset?._ref);
+}
+
+/**
+ * Görsel henüz yüklenmemişken gösterilen nötr yer tutucu. Sayfanın çökmesini
+ * veya boş bir delik oluşmasını engeller.
+ */
+function Placeholder() {
+  return (
+    <div
+      className="absolute inset-0 bg-slate-900 flex items-center justify-center"
+      aria-hidden
+    >
+      <Image
+        src="/logo-mark-white.png"
+        alt=""
+        width={258}
+        height={195}
+        className="w-1/3 max-w-[120px] h-auto opacity-10"
+      />
+    </div>
+  );
+}
 
 /**
  * Sanity görselini next/image ile gösterir. Panelde işaretlenen odak noktası
@@ -26,13 +55,12 @@ export default function SanityImg({
   priority = false,
   width = 1600,
 }: Props) {
-  const source = urlFor(image).width(width).url();
-  const altText = alt ?? image.alt ?? "";
+  if (!hasAsset(image)) return <Placeholder />;
 
   return (
     <Image
-      src={source}
-      alt={altText}
+      src={urlFor(image).width(width).url()}
+      alt={alt ?? image.alt ?? ""}
       fill
       sizes={sizes}
       priority={priority}
