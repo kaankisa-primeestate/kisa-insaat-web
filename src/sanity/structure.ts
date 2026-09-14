@@ -57,37 +57,49 @@ export const structure: StructureResolver = (S) =>
         ),
 
       S.listItem()
-        .title("Satıştaki Daireler")
+        .title("Satılık & Kiralık")
         .schemaType("property")
         .child(
           S.list()
-            .title("Satıştaki Daireler")
+            .title("Satılık & Kiralık Gayrimenkuller")
             .items([
               S.listItem()
-                .title("Satılık")
+                .title("Satılık İlanlar")
                 .child(
                   S.documentList()
-                    .title("Satılık Daireler")
-                    .filter('_type == "property" && status == "available"'),
+                    .title("Satılık İlanlar")
+                    .filter(
+                      '_type == "property" && listingType in ["sale", "both"] && status == "available"',
+                    ),
                 ),
+              S.listItem()
+                .title("Kiralık İlanlar")
+                .child(
+                  S.documentList()
+                    .title("Kiralık İlanlar")
+                    .filter(
+                      '_type == "property" && listingType in ["rent", "both"] && status == "available"',
+                    ),
+                ),
+              S.divider(),
               S.listItem()
                 .title("Opsiyonlu / Rezerve")
                 .child(
                   S.documentList()
-                    .title("Rezerve Daireler")
+                    .title("Opsiyonlu / Rezerve")
                     .filter('_type == "property" && status == "reserved"'),
                 ),
               S.listItem()
-                .title("Satılanlar")
+                .title("İşlemi Tamamlananlar")
                 .child(
                   S.documentList()
-                    .title("Satılan Daireler")
-                    .filter('_type == "property" && status == "sold"'),
+                    .title("Satılan / Kiralanan")
+                    .filter('_type == "property" && status == "closed"'),
                 ),
               S.divider(),
               S.listItem()
-                .title("Tüm Daireler")
-                .child(S.documentTypeList("property").title("Tüm Daireler")),
+                .title("Tüm İlanlar")
+                .child(S.documentTypeList("property").title("Tüm İlanlar")),
             ]),
         ),
 

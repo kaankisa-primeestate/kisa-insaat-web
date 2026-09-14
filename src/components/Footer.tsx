@@ -8,7 +8,7 @@ const QUICK_LINKS = [
   { href: "/kurumsal", label: "Hakkımızda" },
   { href: "/projeler?durum=devam", label: "Devam Eden Projeler" },
   { href: "/projeler?durum=tamamlanan", label: "Tamamlanan Projeler" },
-  { href: "/satistaki-gayrimenkuller", label: "Satıştaki Daireler" },
+  { href: "/gayrimenkuller", label: "Satılık & Kiralık İlanlar" },
   { href: "/kentsel-donusum", label: "Kentsel Dönüşüm" },
 ];
 

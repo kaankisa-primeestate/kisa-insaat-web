@@ -3,24 +3,73 @@
 import { useMemo, useState } from "react";
 import { Filter, MessageCircle } from "lucide-react";
 import SanityImg from "./SanityImg";
-import type { Property, PropertyStatus } from "@/sanity/types";
+import type { ListingType, Property, PropertyStatus } from "@/sanity/types";
 import { whatsappHref } from "@/lib/format";
 
-const STATUS_STYLE: Record<PropertyStatus, { label: string; className: string }> =
-  {
-    available: {
-      label: "Satılık",
-      className: "bg-emerald-600 text-white",
-    },
-    reserved: {
-      label: "Opsiyonlu",
-      className: "bg-amber-600 text-white",
-    },
-    sold: {
-      label: "Satıldı",
-      className: "bg-slate-700 text-slate-300",
-    },
-  };
+const TYPE_FILTERS: { value: "all" | ListingType; label: string }[] = [
+  { value: "all", label: "Tümü" },
+  { value: "sale", label: "Satılık" },
+  { value: "rent", label: "Kiralık" },
+];
+
+/**
+ * Rozet metni ilan tipiyle durumun birleşiminden üretilir; böylece kiralık bir
+ * ilanda "Satıldı" gibi tutarsız bir etiket çıkması mümkün değildir.
+ */
+function statusBadge(listingType: ListingType, status: PropertyStatus) {
+  if (status === "reserved") {
+    return { label: "Opsiyonlu", className: "bg-amber-600 text-white" };
+  }
+  if (status === "closed") {
+    const label =
+      listingType === "rent"
+        ? "Kiralandı"
+        : listingType === "sale"
+          ? "Satıldı"
+          : "İşlem Tamamlandı";
+    return { label, className: "bg-slate-700 text-slate-300" };
+  }
+  const label =
+    listingType === "rent"
+      ? "Kiralık"
+      : listingType === "sale"
+        ? "Satılık"
+        : "Satılık / Kiralık";
+  return { label, className: "bg-emerald-600 text-white" };
+}
+
+function PriceBlock({ property }: { property: Property }) {
+  const showSale = property.listingType !== "rent" && property.salePrice;
+  const showRent = property.listingType !== "sale" && property.rentPrice;
+
+  return (
+    <div className="min-w-0 space-y-1">
+      {showSale && (
+        <div>
+          <div className="text-[10px] text-slate-500 uppercase">
+            Satış Fiyatı
+          </div>
+          <div className="text-xs font-bold text-amber-400 truncate">
+            {property.salePrice}
+          </div>
+        </div>
+      )}
+      {showRent && (
+        <div>
+          <div className="text-[10px] text-slate-500 uppercase">Aylık Kira</div>
+          <div className="text-xs font-bold text-emerald-400 truncate">
+            {property.rentPrice}
+          </div>
+        </div>
+      )}
+      {property.dues && (
+        <div className="text-[10px] text-slate-500">
+          Aidat: {property.dues}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function PropertiesGrid({
   properties,
@@ -29,58 +78,92 @@ export default function PropertiesGrid({
   properties: Property[];
   whatsapp: string;
 }) {
-  const [selectedRoom, setSelectedRoom] = useState("all");
+  const [type, setType] = useState<"all" | ListingType>("all");
+  const [room, setRoom] = useState("all");
 
-  /** Filtre seçenekleri gerçekte var olan dairelerden üretilir. */
   const roomOptions = useMemo(
-    () => [
-      "all",
-      ...Array.from(new Set(properties.map((p) => p.roomCount))).sort(),
-    ],
+    () => ["all", ...Array.from(new Set(properties.map((p) => p.roomCount))).sort()],
     [properties],
   );
 
-  const visible =
-    selectedRoom === "all"
-      ? properties
-      : properties.filter((p) => p.roomCount === selectedRoom);
+  /** "Satılık veya kiralık" ilanlar her iki filtrede de görünür. */
+  const visible = properties.filter((property) => {
+    const typeMatch =
+      type === "all" ||
+      property.listingType === type ||
+      property.listingType === "both";
+    const roomMatch = room === "all" || property.roomCount === room;
+    return typeMatch && roomMatch;
+  });
+
+  const showTypeFilter = new Set(properties.map((p) => p.listingType)).size > 1;
 
   return (
     <>
-      {roomOptions.length > 2 && (
-        <div className="bg-slate-900 p-4 rounded-xl border border-slate-800 mb-12 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-slate-300 text-xs font-semibold">
-            <Filter className="w-4 h-4 text-amber-500 shrink-0" />
-            <span>Oda Sayısına Göre Filtrele:</span>
-          </div>
-          <div className="flex flex-wrap justify-center gap-2">
-            {roomOptions.map((room) => (
-              <button
-                key={room}
-                type="button"
-                onClick={() => setSelectedRoom(room)}
-                aria-pressed={selectedRoom === room}
-                className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
-                  selectedRoom === room
-                    ? "bg-amber-600 text-white"
-                    : "bg-slate-800 text-slate-300 hover:bg-slate-700"
-                }`}
-              >
-                {room === "all" ? "Tümü" : room}
-              </button>
-            ))}
-          </div>
+      {(showTypeFilter || roomOptions.length > 2) && (
+        <div className="bg-slate-900 p-4 rounded-xl border border-slate-800 mb-12 space-y-4">
+          {showTypeFilter && (
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-2 text-slate-300 text-xs font-semibold">
+                <Filter className="w-4 h-4 text-amber-500 shrink-0" />
+                <span>İlan Tipi:</span>
+              </div>
+              <div className="flex flex-wrap justify-center gap-2">
+                {TYPE_FILTERS.map((item) => (
+                  <button
+                    key={item.value}
+                    type="button"
+                    onClick={() => setType(item.value)}
+                    aria-pressed={type === item.value}
+                    className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+                      type === item.value
+                        ? "bg-amber-600 text-white"
+                        : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {roomOptions.length > 2 && (
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4 border-t border-slate-800 pt-4 first:border-0 first:pt-0">
+              <div className="flex items-center gap-2 text-slate-300 text-xs font-semibold">
+                <Filter className="w-4 h-4 text-amber-500 shrink-0" />
+                <span>Oda Sayısı:</span>
+              </div>
+              <div className="flex flex-wrap justify-center gap-2">
+                {roomOptions.map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => setRoom(option)}
+                    aria-pressed={room === option}
+                    className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+                      room === option
+                        ? "bg-amber-600 text-white"
+                        : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+                    }`}
+                  >
+                    {option === "all" ? "Tümü" : option}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
       {visible.length === 0 ? (
         <p className="text-center text-sm text-slate-400 py-16">
-          Bu kategoride şu anda satışta daire bulunmuyor.
+          Bu kriterlere uyan gayrimenkul bulunmuyor.
         </p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {visible.map((property) => {
-            const status = STATUS_STYLE[property.status];
+            const badge = statusBadge(property.listingType, property.status);
             return (
               <article
                 key={property._id}
@@ -104,9 +187,9 @@ export default function PropertiesGrid({
                   )}
                   <div className="absolute top-4 right-4">
                     <span
-                      className={`px-3 py-1 rounded-md text-xs font-bold shadow-lg ${status.className}`}
+                      className={`px-3 py-1 rounded-md text-xs font-bold shadow-lg ${badge.className}`}
                     >
-                      {status.label}
+                      {badge.label}
                     </span>
                   </div>
                 </div>
@@ -148,17 +231,10 @@ export default function PropertiesGrid({
                     </div>
                   </div>
 
-                  <div className="pt-4 border-t border-slate-800 flex items-center justify-between gap-4">
-                    <div className="min-w-0">
-                      <div className="text-[10px] text-slate-500 uppercase">
-                        Fiyat Bilgisi
-                      </div>
-                      <div className="text-xs font-bold text-amber-400 truncate">
-                        {property.price}
-                      </div>
-                    </div>
+                  <div className="pt-4 border-t border-slate-800 flex items-end justify-between gap-4">
+                    <PriceBlock property={property} />
 
-                    {whatsapp && property.status !== "sold" && (
+                    {whatsapp && property.status !== "closed" && (
                       <a
                         href={`${whatsappHref(whatsapp)}?text=${encodeURIComponent(
                           `Merhaba, ${property.title} hakkında bilgi almak istiyorum.`,

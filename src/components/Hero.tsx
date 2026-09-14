@@ -121,11 +121,11 @@ export default function Hero({ images = [] }: { images?: HeroImage[] }) {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
-            href="/satistaki-gayrimenkuller"
+            href="/gayrimenkuller"
             className="w-full sm:w-auto flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-500 text-white font-semibold px-8 py-4 rounded-md transition-all shadow-xl shadow-amber-900/30"
           >
             <Home className="w-5 h-5" />
-            <span>Satıştaki Daireleri İncele</span>
+            <span>Satılık &amp; Kiralık İlanlar</span>
           </Link>
           <Link
             href="/projeler"

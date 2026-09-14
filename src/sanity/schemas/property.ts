@@ -1,13 +1,22 @@
 import { defineField, defineType } from "sanity";
 import { galleryField, imageField } from "../lib/fields";
 
+/** İlanın ne için yayınlandığı. Durumdan bağımsızdır. */
+export const LISTING_TYPES = [
+  { title: "Satılık", value: "sale" },
+  { title: "Kiralık", value: "rent" },
+  { title: "Satılık veya Kiralık", value: "both" },
+] as const;
+
+/** İlanın güncel durumu. Etiketi ilan tipine göre sitede uyarlanır. */
 export const PROPERTY_STATUSES = [
-  { title: "Satılık", value: "available" },
+  { title: "Müsait", value: "available" },
   { title: "Opsiyonlu / Rezerve", value: "reserved" },
-  { title: "Satıldı", value: "sold" },
+  { title: "İşlem Tamamlandı", value: "closed" },
 ] as const;
 
 export const ROOM_COUNTS = [
+  "1+0",
   "1+1",
   "2+1",
   "3+1",
@@ -15,11 +24,16 @@ export const ROOM_COUNTS = [
   "4+1 Dubleks",
   "5+1 Dubleks",
   "Ticari / Dükkan",
+  "Ofis",
 ] as const;
+
+/** Satış fiyatı alanı yalnızca satılık ve "satılık veya kiralık" ilanlarda görünür. */
+const showsSalePrice = (type?: string) => type === "sale" || type === "both";
+const showsRentPrice = (type?: string) => type === "rent" || type === "both";
 
 export default defineType({
   name: "property",
-  title: "Satıştaki Gayrimenkuller",
+  title: "Satılık & Kiralık Gayrimenkuller",
   type: "document",
   groups: [
     { name: "genel", title: "Genel Bilgiler", default: true },
@@ -29,10 +43,10 @@ export default defineType({
   fields: [
     defineField({
       name: "title",
-      title: "Daire Başlığı",
+      title: "Gayrimenkul Başlığı",
       type: "string",
       group: "genel",
-      description: 'Örnek: "Ebru Apt. Kat: 4, Daire: 12". 5-70 karakter.',
+      description: 'Örnek: "Polenium Rezidans Kat: 4, Daire: 12". 5-70 karakter.',
       validation: (Rule) => Rule.required().min(5).max(70),
     }),
     defineField({
@@ -41,15 +55,28 @@ export default defineType({
       type: "reference",
       group: "genel",
       to: [{ type: "project" }],
-      description: "Bu dairenin ait oldugu proje. Zorunlu.",
+      description: "Bu gayrimenkulün ait olduğu proje. Zorunlu.",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "listingType",
+      title: "İlan Tipi",
+      type: "string",
+      group: "genel",
+      initialValue: "sale",
+      description:
+        "Satılık mı, kiralık mı, yoksa ikisi birden mi? Fiyat alanları bu seçime göre açılır.",
+      options: { list: [...LISTING_TYPES], layout: "radio" },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "status",
-      title: "Satış Durumu",
+      title: "Durum",
       type: "string",
       group: "genel",
       initialValue: "available",
+      description:
+        'Sitede gösterilen etiket ilan tipine göre uyarlanır: satılık bir ilanda "Satıldı", kiralık bir ilanda "Kiralandı" yazar.',
       options: { list: [...PROPERTY_STATUSES], layout: "radio" },
       validation: (Rule) => Rule.required(),
     }),
@@ -66,7 +93,7 @@ export default defineType({
       title: "Bulunduğu Kat",
       type: "string",
       group: "genel",
-      description: 'Örnek: "4. Kat", "Cati Kati", "Zemin"',
+      description: 'Örnek: "4. Kat", "Çatı Katı", "Zemin"',
       validation: (Rule) => Rule.required().max(30),
     }),
     defineField({
@@ -75,7 +102,16 @@ export default defineType({
       type: "boolean",
       group: "genel",
       initialValue: false,
-      description: "Ana sayfadaki one çıkan daireler bölümünde gösterilir.",
+      description: "Ana sayfadaki öne çıkan ilanlar bölümünde gösterilir.",
+    }),
+    defineField({
+      name: "description",
+      title: "Açıklama",
+      type: "text",
+      rows: 5,
+      group: "genel",
+      description: "40-500 karakter. Öne çıkan özellikleri ve konumu anlatın.",
+      validation: (Rule) => Rule.required().min(40).max(500),
     }),
 
     defineField({
@@ -105,55 +141,86 @@ export default defineType({
           }),
     }),
     defineField({
-      name: "price",
-      title: "Fiyat",
+      name: "salePrice",
+      title: "Satış Fiyatı",
       type: "string",
       group: "olcu",
-      initialValue: "Fiyat İçin İletişime Gecin",
+      initialValue: "Fiyat İçin İletişime Geçin",
       description:
-        'Rakam yazacaksaniz para birimiyle birlikte yazın. Boş bırakmayın; fiyat vermek istemiyorsaniz "Fiyat İçin İletişime Gecin" kalsin.',
-      validation: (Rule) => Rule.required().max(60),
+        'Rakam yazacaksanız para birimiyle birlikte yazın. Fiyat vermek istemiyorsanız "Fiyat İçin İletişime Geçin" kalsın.',
+      hidden: ({ document }) =>
+        !showsSalePrice(document?.listingType as string | undefined),
+      validation: (Rule) =>
+        Rule.max(60).custom((value, context) => {
+          const type = (context.document as { listingType?: string } | undefined)
+            ?.listingType;
+          if (!showsSalePrice(type)) return true;
+          return value ? true : "Satılık ilanlarda satış fiyatı alanı zorunludur.";
+        }),
+    }),
+    defineField({
+      name: "rentPrice",
+      title: "Aylık Kira Bedeli",
+      type: "string",
+      group: "olcu",
+      initialValue: "Fiyat İçin İletişime Geçin",
+      description: 'Aylık tutarı para birimiyle yazın. Örnek: "45.000 TL / ay"',
+      hidden: ({ document }) =>
+        !showsRentPrice(document?.listingType as string | undefined),
+      validation: (Rule) =>
+        Rule.max(60).custom((value, context) => {
+          const type = (context.document as { listingType?: string } | undefined)
+            ?.listingType;
+          if (!showsRentPrice(type)) return true;
+          return value ? true : "Kiralık ilanlarda kira bedeli alanı zorunludur.";
+        }),
+    }),
+    defineField({
+      name: "dues",
+      title: "Aidat",
+      type: "string",
+      group: "olcu",
+      description:
+        'Opsiyonel. Örnek: "2.500 TL / ay". Kiralık ilanlarda en sık sorulan bilgidir.',
+      validation: (Rule) => Rule.max(40),
     }),
 
-    galleryField("images", "Daire Görselleri", "card", {
+    galleryField("images", "Gayrimenkul Görselleri", "card", {
       group: "gorseller",
       min: 1,
       max: 20,
-      description: "En az 1, en fazla 20 görsel. Ilk görsel kartta kapak olarak kullanılır.",
+      description:
+        "En az 1, en fazla 20 görsel. İlk görsel kartta kapak olarak kullanılır.",
     }),
     imageField("floorPlan", "Kat Planı", "plan", {
       group: "gorseller",
-      description: "Opsiyonel. Dikey veya kare olabilir, oran kontrolü uygulanmaz.",
-    }),
-
-    defineField({
-      name: "description",
-      title: "Daire Açıklaması",
-      type: "text",
-      rows: 5,
-      group: "genel",
-      description: "40-500 karakter. One çıkan özellikleri ve konumu anlatın.",
-      validation: (Rule) => Rule.required().min(40).max(500),
+      description:
+        "Opsiyonel. Dikey veya kare olabilir, oran kontrolü uygulanmaz.",
     }),
   ],
   preview: {
     select: {
       title: "title",
+      listingType: "listingType",
       status: "status",
       room: "roomCount",
       gross: "grossArea",
       media: "images.0",
       projectTitle: "project.title",
     },
-    prepare({ title, status, room, gross, media, projectTitle }) {
-      const label =
-        PROPERTY_STATUSES.find((s) => s.value === status)?.title ?? "Durum yok";
-      const parts = [projectTitle, room, gross ? `${gross} m2` : null, label];
-      return {
-        title,
-        subtitle: parts.filter(Boolean).join(" · "),
-        media,
-      };
+    prepare({ title, listingType, status, room, gross, media, projectTitle }) {
+      const typeLabel =
+        LISTING_TYPES.find((t) => t.value === listingType)?.title ?? "";
+      const statusLabel =
+        PROPERTY_STATUSES.find((s) => s.value === status)?.title ?? "";
+      const parts = [
+        projectTitle,
+        room,
+        gross ? `${gross} m2` : null,
+        typeLabel,
+        statusLabel,
+      ];
+      return { title, subtitle: parts.filter(Boolean).join(" · "), media };
     },
   },
 });

@@ -3,7 +3,8 @@ import type { SanityImageSource } from "@sanity/image-url";
 export type SanityImage = SanityImageSource & { alt?: string };
 
 export type ProjectStatus = "planned" | "ongoing" | "completed";
-export type PropertyStatus = "available" | "reserved" | "sold";
+export type PropertyStatus = "available" | "reserved" | "closed";
+export type ListingType = "sale" | "rent" | "both";
 
 export type SiteSettings = {
   companyName: string;
@@ -52,12 +53,15 @@ export type Property = {
   _id: string;
   title: string;
   projectTitle?: string;
+  listingType: ListingType;
   status: PropertyStatus;
   roomCount: string;
   grossArea: number;
   netArea: number;
   floor: string;
-  price: string;
+  salePrice?: string;
+  rentPrice?: string;
+  dues?: string;
   description: string;
   images: SanityImage[];
   floorPlan?: SanityImage;

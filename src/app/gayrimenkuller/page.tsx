@@ -7,9 +7,9 @@ import { getSiteSettings } from "@/sanity/settings";
 import type { Property } from "@/sanity/types";
 
 export const metadata: Metadata = {
-  title: "Satıştaki Gayrimenkuller",
+  title: "Satılık & Kiralık Gayrimenkuller",
   description:
-    "Kısa İnşaat projelerinde yer alan satılık konut ve ticari alanlar. Oda sayısı, metrekare ve kat bilgileriyle birlikte inceleyin.",
+    "Kısa İnşaat projelerinde yer alan satılık ve kiralık konut ile ticari alanlar. Oda sayısı, metrekare ve kat bilgileriyle birlikte inceleyin.",
 };
 
 export default async function PropertiesPage() {
@@ -25,19 +25,19 @@ export default async function PropertiesPage() {
           Gayrimenkul Portföyü
         </div>
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white">
-          Satıştaki Gayrimenkuller
+          Satılık &amp; Kiralık Gayrimenkuller
         </h1>
         <p className="text-slate-400 text-base leading-relaxed">
-          Kısa İnşaat projelerinde yer alan satılık konut ve ticari alanları
-          inceleyebilir, detaylı bilgi için doğrudan bizimle iletişime
+          Kısa İnşaat projelerinde yer alan satılık ve kiralık konut ile ticari
+          alanları inceleyebilir, detaylı bilgi için doğrudan bizimle iletişime
           geçebilirsiniz.
         </p>
       </div>
 
       {properties.length === 0 ? (
         <EmptyState
-          title="Şu anda satışta daire bulunmuyor"
-          description="Satışa çıkacak yeni daireler kısa süre içinde burada yayınlanacak. Öncelikli bilgilendirilmek isterseniz bizimle iletişime geçebilirsiniz."
+          title="Şu anda yayında ilan bulunmuyor"
+          description="Satılık ve kiralık gayrimenkullerimiz kısa süre içinde burada yayınlanacak. Öncelikli bilgilendirilmek isterseniz bizimle iletişime geçebilirsiniz."
         />
       ) : (
         <PropertiesGrid properties={properties} whatsapp={settings.whatsapp} />

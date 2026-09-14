@@ -10,7 +10,7 @@ import { formatPhone, telHref, whatsappHref } from "@/lib/format";
 const NAV_LINKS = [
   { href: "/kurumsal", label: "Kurumsal" },
   { href: "/projeler", label: "Projelerimiz" },
-  { href: "/satistaki-gayrimenkuller", label: "Satıştaki Daireler" },
+  { href: "/gayrimenkuller", label: "Satılık & Kiralık" },
   { href: "/kentsel-donusum", label: "Kentsel Dönüşüm" },
   { href: "/iletisim", label: "İletişim" },
 ];
