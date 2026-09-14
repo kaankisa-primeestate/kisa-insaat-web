@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Suspense } from "react";
+import PaletteSwitcher from "@/components/PaletteSwitcher";
 import { getSiteSettings } from "@/sanity/settings";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -43,6 +45,9 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-ground text-fg font-sans">
         {children}
+        <Suspense fallback={null}>
+          <PaletteSwitcher />
+        </Suspense>
       </body>
     </html>
   );

@@ -2,11 +2,18 @@
 
 /*
  * ---------------------------------------------------------------------------
- * Renk paleti — "Taş & Bronz"
+ * RENK PALETİ
  *
- * Renkler projelerin cephe malzemesinden türetilmiştir: sıcak taş, koyu bronz
- * doğrama, antrasit zemin kat. Tüm arayüz yalnızca bu değişkenleri kullanır;
- * paleti değiştirmek için başka hiçbir dosyaya dokunmak gerekmez.
+ * Varsayılan palet "Taş & Bronz": renkler projelerin cephe malzemesinden
+ * türetilmiştir — sıcak taş zemin, koyu bronz doğrama, antrasit yüzeyler.
+ *
+ * Arayüzün hiçbir yerinde doğrudan renk değeri kullanılmaz; her şey aşağıdaki
+ * değişkenler üzerinden çalışır. Bu yüzden paleti değiştirmek yalnızca bu
+ * dosyayı düzenlemek demektir.
+ *
+ * Alternatif paletler denemek için adres sonuna ?palet=grafit veya
+ * ?palet=yesil ekleyin. Seçim yalnızca o tarayıcıda geçerlidir, siteyi
+ * ziyaret eden başka kimseyi etkilemez.
  * ---------------------------------------------------------------------------
  */
 @theme {
@@ -25,39 +32,83 @@
   --color-fg-muted: #c4baaa;
   --color-fg-dim: #a89e8d;
 
-  /* Bronz — tek vurgu rengi. Seyrek kullanılır. */
+  /* Vurgu — tek renk, seyrek kullanılır */
   --color-bronze: #b08a55;
   --color-bronze-light: #cfa872;
   --color-bronze-strong: #c49a63;
   --color-bronze-deep: #8f6f45;
   --color-bronze-dark: #7a5e3a;
-  /* Bronz zemin üzerine yazılan metin */
   --color-bronze-ink: #17120b;
 
-  /* WhatsApp ve "müsait" durumu — paletin içinden seçilmiş sakin yeşil */
+  /* WhatsApp ve "müsait" durumu */
   --color-wa: #2f6b4f;
   --color-wa-hover: #3a8060;
   --color-wa-text: #6aab86;
 
-  /* "Planlanan" durumu — nötr, vurgu rengiyle yarışmayan mavi-gri */
+  /* "Planlanan" durumu — vurgu rengiyle yarışmayan nötr ton */
   --color-planned: #8fa3ae;
 }
 
-:root {
-  --background: #1c1814;
-  --foreground: #f3efe8;
+/* --- Alternatif: Grafit & Kireç -------------------------------------------
+ * Renkli vurgu yoktur; vurgu görevini kemik beyazı bir nötr üstlenir.
+ * Siyah-beyaz logoyla birebir örtüşür.
+ */
+[data-palet="grafit"] {
+  --color-ground: #131312;
+  --color-surface: #1c1c1a;
+  --color-surface-2: #252523;
+  --color-surface-3: #302f2d;
+  --color-line: #2b2b29;
+  --color-line-strong: #45443f;
+  --color-fg: #fafaf8;
+  --color-fg-muted: #c6c6c0;
+  --color-fg-dim: #a5a59e;
+  --color-bronze: #e9e5dc;
+  --color-bronze-light: #f2efe8;
+  --color-bronze-strong: #fffdf7;
+  --color-bronze-deep: #cfcabf;
+  --color-bronze-dark: #b5b0a4;
+  --color-bronze-ink: #0c0c0b;
+  --color-wa: #35604a;
+  --color-wa-hover: #40755a;
+  --color-wa-text: #83b79a;
+  --color-planned: #9aa6ab;
+}
+
+/* --- Alternatif: Derin Yeşil & Pirinç --------------------------------------
+ * Neredeyse siyaha çalan yeşil zemin üzerine pirinç vurgu. WhatsApp yeşili
+ * bu palette kendiliğinden yerine oturur.
+ */
+[data-palet="yesil"] {
+  --color-ground: #101a15;
+  --color-surface: #182420;
+  --color-surface-2: #1f2d27;
+  --color-surface-3: #29382f;
+  --color-line: #24332c;
+  --color-line-strong: #3a4d42;
+  --color-fg: #eff3f0;
+  --color-fg-muted: #bacabf;
+  --color-fg-dim: #98ab9f;
+  --color-bronze: #c2a052;
+  --color-bronze-light: #d8ba6e;
+  --color-bronze-strong: #d2b063;
+  --color-bronze-deep: #9c7f3c;
+  --color-bronze-dark: #856a30;
+  --color-bronze-ink: #101a15;
+  --color-wa: #2f6b4f;
+  --color-wa-hover: #3a8060;
+  --color-wa-text: #74b78f;
+  --color-planned: #94a8b3;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-ground);
+  color: var(--color-fg);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
 }
 
@@ -78,7 +129,6 @@ body {
   animation: hero-ken-burns 18000ms ease-in-out infinite alternate;
 }
 
-/* Hareketi azaltılmış tercih eden kullanıcılarda animasyon kapatılır */
 @media (prefers-reduced-motion: reduce) {
   .hero-slide-image {
     animation: none;

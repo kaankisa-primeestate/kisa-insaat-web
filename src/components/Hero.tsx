@@ -17,14 +17,14 @@ function DesignedBackdrop() {
     <div className="absolute inset-0" aria-hidden>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_25%_15%,#2a241d_0%,#1b1712_45%,#14110e_100%)]" />
       <div
-        className="absolute inset-0 opacity-[0.085]"
+        className="absolute inset-0 opacity-[0.10]"
         style={{
           backgroundImage:
             "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
           backgroundSize: "72px 72px",
         }}
       />
-      <div className="absolute -right-8 bottom-0 w-[62%] max-w-2xl opacity-[0.14]">
+      <div className="absolute -right-8 bottom-0 w-[66%] max-w-3xl opacity-[0.20]">
         <Image
           src="/logo-mark-white.png"
           alt=""
