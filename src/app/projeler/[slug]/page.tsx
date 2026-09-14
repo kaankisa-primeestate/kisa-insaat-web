@@ -56,45 +56,64 @@ export default async function ProjectDetailPage({ params }: Params) {
 
   return (
     <main className="pt-24">
-      <div className="relative h-[60vh] min-h-[400px] flex items-end justify-start bg-slate-950">
-        <SanityImg
-          image={project.mainImage}
-          alt={project.title}
-          sizes="100vw"
-          priority
-          width={2000}
-          className="object-cover opacity-40"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+      {/*
+        Kapak görseli dikey de yatay da olabilir. object-contain ile görselin
+        tamamı gösterilir; arkasındaki bulanıklaştırılmış kopya boşlukları
+        doldurur, böylece hiçbir oranda kırpma veya boş kenar oluşmaz.
+      */}
+      <section className="relative overflow-hidden border-b border-slate-900">
+        <div className="absolute inset-0" aria-hidden>
+          <SanityImg
+            image={project.mainImage}
+            alt=""
+            sizes="100vw"
+            width={1200}
+            className="object-cover blur-3xl scale-125 opacity-30"
+          />
+          <div className="absolute inset-0 bg-slate-950/60" />
+        </div>
 
-        <div className="relative max-w-7xl mx-auto px-6 pb-12 w-full space-y-4">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="px-3 py-1 rounded-md bg-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider">
-              {statusLabel}
-            </span>
-            {project.adaParsel && (
-              <span className="px-3 py-1 rounded-md bg-slate-900/80 text-slate-300 border border-slate-800 text-xs font-mono">
-                {project.adaParsel}
-              </span>
-            )}
+        <div className="relative max-w-7xl mx-auto px-6 pt-12 pb-14 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div className="relative order-1 lg:order-2 h-[45vh] min-h-[320px] lg:h-[62vh] lg:max-h-[680px]">
+            <SanityImg
+              image={project.mainImage}
+              alt={project.title}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              priority
+              width={1600}
+              className="object-contain drop-shadow-2xl"
+            />
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight">
-            {project.title}
-          </h1>
-
-          <div className="flex flex-wrap items-center gap-4 text-slate-300 text-sm">
-            <div className="flex items-center gap-1.5">
-              <MapPin className="w-4 h-4 text-amber-500" />
-              <span>{project.location}</span>
+          <div className="order-2 lg:order-1 space-y-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="px-3 py-1 rounded-md bg-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider">
+                {statusLabel}
+              </span>
+              {project.adaParsel && (
+                <span className="px-3 py-1 rounded-md bg-slate-900/80 text-slate-300 border border-slate-800 text-xs font-mono">
+                  {project.adaParsel}
+                </span>
+              )}
             </div>
-            <div className="flex items-center gap-1.5">
-              <Calendar className="w-4 h-4 text-amber-500" />
-              <span>Teslim: {project.deliveryDate}</span>
+
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">
+              {project.title}
+            </h1>
+
+            <div className="flex flex-wrap items-center gap-4 text-slate-300 text-sm">
+              <div className="flex items-center gap-1.5">
+                <MapPin className="w-4 h-4 text-amber-500 shrink-0" />
+                <span>{project.location}</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Calendar className="w-4 h-4 text-amber-500 shrink-0" />
+                <span>Teslim: {project.deliveryDate}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-12 gap-12">
         <div className="lg:col-span-8 space-y-12">

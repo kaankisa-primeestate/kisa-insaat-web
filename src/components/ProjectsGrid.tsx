@@ -99,7 +99,8 @@ export default function ProjectsGrid({
               href={`/projeler/${project.slug}`}
               className="bg-slate-900 rounded-xl overflow-hidden border border-slate-800 hover:border-amber-600/50 transition-all flex flex-col group"
             >
-              <div className="relative h-64 overflow-hidden">
+              {/* Mimari render'lar dikeydir; kart görseli 4:5 oranında tutulur. */}
+              <div className="relative aspect-4/5 overflow-hidden">
                 <SanityImg
                   image={project.mainImage}
                   sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"

@@ -2,24 +2,31 @@ import type { ValidationContext } from "sanity";
 import { apiVersion } from "../env";
 
 /**
- * Gorsel kalite esikleri. Bu degerlerin altindaki gorseller panelde reddedilir,
- * boylece siteye dusuk cozunurluklu veya bozuk oranli gorsel girmesi engellenir.
+ * Görsel kalite eşikleri. Bu değerlerin altındaki görseller panelde reddedilir,
+ * böylece siteye düşük çözünürlüklü görsel girmesi engellenir.
+ *
+ * Ölçüler uzun/kısa kenar üzerinden tanımlanır; mimari render'lar genellikle
+ * dikey, şantiye fotoğrafları yatay olduğu için ikisi de kabul edilmelidir.
  */
 export const IMAGE_RULES = {
-  /** Hero / kapak gorselleri: genis ekranda tam genislik kaplar. */
-  hero: { minWidth: 1600, minHeight: 900 },
-  /** Kart ve galeri gorselleri. */
-  card: { minWidth: 1200, minHeight: 800 },
-  /** Kat plani: dikey de olabilir, oran kontrolu uygulanmaz. */
-  plan: { minWidth: 1000, minHeight: 1000 },
+  /** Kapak ve hero görselleri. */
+  hero: { minLongEdge: 1600, minShortEdge: 1000 },
+  /** Kart ve galeri görselleri. */
+  card: { minLongEdge: 1200, minShortEdge: 800 },
+  /** Kat planı: oran kontrolü uygulanmaz. */
+  plan: { minLongEdge: 1000, minShortEdge: 700 },
 } as const;
 
-/** 12 MB ustu kaynak dosyalar depolama kotasini hizla tuketir. */
+/** 12 MB üstü kaynak dosyalar depolama kotasını hızla tüketir. */
 const MAX_FILE_SIZE_MB = 12;
 
-/** Kart ve hero alanlarinda kabul edilebilir en/boy orani araligi. */
-const MIN_ASPECT_RATIO = 1.1;
-const MAX_ASPECT_RATIO = 2.4;
+/**
+ * Kabul edilen en/boy oranı aralığı. Dikey render'lar (yaklaşık 0.70) ve yatay
+ * fotoğraflar (yaklaşık 1.50) bu aralığa girer; yalnızca panorama şeritleri ve
+ * aşırı ince dikey kırpmalar dışarıda kalır.
+ */
+const MIN_ASPECT_RATIO = 0.45;
+const MAX_ASPECT_RATIO = 2.6;
 
 type ImageValue = { asset?: { _ref?: string } };
 
@@ -33,11 +40,11 @@ function formatMb(bytes: number): string {
 }
 
 /**
- * Yuklenen gorselin cozunurlugunu, dosya boyutunu ve en/boy oranini dogrular.
- * Cozunurluk ve dosya boyutu hata (kayit engellenir); oran sapmasi uyaridir.
+ * Yüklenen görselin çözünürlüğünü, dosya boyutunu ve en/boy oranını doğrular.
+ * Hata döndüğünde kayıt engellenir.
  */
 export function imageQuality(
-  { minWidth, minHeight }: { minWidth: number; minHeight: number },
+  { minLongEdge, minShortEdge }: { minLongEdge: number; minShortEdge: number },
   { checkAspectRatio = true }: { checkAspectRatio?: boolean } = {},
 ) {
   return async (
@@ -55,19 +62,21 @@ export function imageQuality(
     if (!asset?.metadata?.dimensions) return true;
 
     const { width, height } = asset.metadata.dimensions;
+    const longEdge = Math.max(width, height);
+    const shortEdge = Math.min(width, height);
 
-    if (width < minWidth || height < minHeight) {
-      return `Görsel çözünürlüğü yetersiz: ${width}x${height}px. En az ${minWidth}x${minHeight}px olmalı. Lutfen daha yuksek çözünürlüklü bir dosya yükleyin.`;
+    if (longEdge < minLongEdge || shortEdge < minShortEdge) {
+      return `Görsel çözünürlüğü yetersiz: ${width}×${height} piksel. Uzun kenar en az ${minLongEdge}, kısa kenar en az ${minShortEdge} piksel olmalı. Dikey veya yatay olması fark etmez.`;
     }
 
     if (asset.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-      return `Dosya cok büyük: ${formatMb(asset.size)} MB. En fazla ${MAX_FILE_SIZE_MB} MB olmalı.`;
+      return `Dosya çok büyük: ${formatMb(asset.size)} MB. En fazla ${MAX_FILE_SIZE_MB} MB olmalı.`;
     }
 
     if (checkAspectRatio) {
       const ratio = width / height;
       if (ratio < MIN_ASPECT_RATIO || ratio > MAX_ASPECT_RATIO) {
-        return `Görsel orani (${ratio.toFixed(2)}:1) tasarım için uygun değil. Yatay ve 3:2 ile 16:9 arasinda bir görsel tercih edin.`;
+        return `Görsel oranı (${ratio.toFixed(2)}) tasarım için fazla uç. Panorama şeridi veya çok ince dikey kırpma yerine normal bir kadraj kullanın.`;
       }
     }
 
@@ -75,7 +84,7 @@ export function imageQuality(
   };
 }
 
-/** Santiye guncellemesi gibi alanlarda ileri tarih girilmesini engeller. */
+/** Şantiye güncellemesi gibi alanlarda ileri tarih girilmesini engeller. */
 export function notInFuture(value: unknown): true | string {
   if (typeof value !== "string" || value.length === 0) return true;
   const entered = new Date(value);
@@ -83,6 +92,6 @@ export function notInFuture(value: unknown): true | string {
   const today = new Date();
   today.setHours(23, 59, 59, 999);
   return entered > today
-    ? "Gelecek bir tarih girilemez. Sadece gerçekleşmiş guncellemeler eklenir."
+    ? "Gelecek bir tarih girilemez. Yalnızca gerçekleşmiş güncellemeler eklenir."
     : true;
 }
