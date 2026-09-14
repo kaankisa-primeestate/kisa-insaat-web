@@ -28,7 +28,7 @@ function hasAsset(image?: SanityImage | null): image is SanityImage {
 function Placeholder() {
   return (
     <div
-      className="absolute inset-0 bg-slate-900 flex items-center justify-center"
+      className="absolute inset-0 bg-surface flex items-center justify-center"
       aria-hidden
     >
       <Image

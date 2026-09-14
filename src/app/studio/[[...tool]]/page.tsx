@@ -22,20 +22,20 @@ export const viewport = {
 export default function StudioPage() {
   if (!isSanityConfigured) {
     return (
-      <main className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-6">
-        <div className="max-w-xl space-y-4 bg-slate-900 border border-slate-800 rounded-xl p-8">
-          <h1 className="text-xl font-bold text-white">
+      <main className="min-h-screen bg-ground text-fg flex items-center justify-center p-6">
+        <div className="max-w-xl space-y-4 bg-surface border border-line rounded-xl p-8">
+          <h1 className="text-xl font-bold text-fg">
             Yönetim paneli henüz bağlanmadı
           </h1>
-          <p className="text-sm text-slate-300 leading-relaxed">
+          <p className="text-sm text-fg-muted leading-relaxed">
             Paneli açmak için Sanity proje kimliğinin ortam değişkeni olarak
             tanımlanması gerekiyor.
           </p>
-          <ol className="text-sm text-slate-300 space-y-2 list-decimal list-inside">
+          <ol className="text-sm text-fg-muted space-y-2 list-decimal list-inside">
             <li>
               <a
                 href="https://sanity.io/manage"
-                className="text-amber-400 hover:underline"
+                className="text-bronze-light hover:underline"
               >
                 sanity.io/manage
               </a>{" "}
@@ -43,7 +43,7 @@ export default function StudioPage() {
             </li>
             <li>
               Proje kimliğini Vercel&apos;de{" "}
-              <code className="text-amber-400">
+              <code className="text-bronze-light">
                 NEXT_PUBLIC_SANITY_PROJECT_ID
               </code>{" "}
               değişkenine yazın.

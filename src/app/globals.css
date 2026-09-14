@@ -1,12 +1,51 @@
 @import "tailwindcss";
 
 /*
- * Site tek bir koyu temaya sahiptir. Onceki surumdeki acik/koyu tema
- * degiskenleri kullanilmiyordu ve ilk yuklemede beyaz parlama yaratiyordu.
+ * ---------------------------------------------------------------------------
+ * Renk paleti — "Taş & Bronz"
+ *
+ * Renkler projelerin cephe malzemesinden türetilmiştir: sıcak taş, koyu bronz
+ * doğrama, antrasit zemin kat. Tüm arayüz yalnızca bu değişkenleri kullanır;
+ * paleti değiştirmek için başka hiçbir dosyaya dokunmak gerekmez.
+ * ---------------------------------------------------------------------------
  */
+@theme {
+  /* Zeminler — koyuudan açığa */
+  --color-ground: #14110e;
+  --color-surface: #1e1a15;
+  --color-surface-2: #241f19;
+  --color-surface-3: #2e2820;
+
+  /* Ayırıcı çizgiler */
+  --color-line: #2c2620;
+  --color-line-strong: #453d33;
+
+  /* Metin */
+  --color-fg: #f3efe8;
+  --color-fg-muted: #a79c8d;
+  --color-fg-dim: #948a7b;
+
+  /* Bronz — tek vurgu rengi. Seyrek kullanılır. */
+  --color-bronze: #b08a55;
+  --color-bronze-light: #cfa872;
+  --color-bronze-strong: #c49a63;
+  --color-bronze-deep: #8f6f45;
+  --color-bronze-dark: #7a5e3a;
+  /* Bronz zemin üzerine yazılan metin */
+  --color-bronze-ink: #17120b;
+
+  /* WhatsApp ve "müsait" durumu — paletin içinden seçilmiş sakin yeşil */
+  --color-wa: #2f6b4f;
+  --color-wa-hover: #3a8060;
+  --color-wa-text: #6aab86;
+
+  /* "Planlanan" durumu — nötr, vurgu rengiyle yarışmayan mavi-gri */
+  --color-planned: #8fa3ae;
+}
+
 :root {
-  --background: #020617; /* slate-950 */
-  --foreground: #f1f5f9; /* slate-100 */
+  --background: #14110e;
+  --foreground: #f3efe8;
 }
 
 @theme inline {
@@ -23,8 +62,8 @@ body {
 }
 
 /*
- * Hero fotograflarina cok yavas bir yakinlasma/uzaklasma verir. Sonsuz ve
- * alternate oldugu icin slayt degistiginde yeniden tetiklenmesi gerekmez.
+ * Hero fotoğraflarına çok yavaş bir yakınlaşma/uzaklaşma verir. Sonsuz ve
+ * alternate olduğu için slayt değiştiğinde yeniden tetiklenmesi gerekmez.
  */
 @keyframes hero-ken-burns {
   from {
@@ -39,7 +78,7 @@ body {
   animation: hero-ken-burns 18000ms ease-in-out infinite alternate;
 }
 
-/* Hareketi azaltilmis tercih eden kullanicilarda animasyon kapatilir */
+/* Hareketi azaltılmış tercih eden kullanıcılarda animasyon kapatılır */
 @media (prefers-reduced-motion: reduce) {
   .hero-slide-image {
     animation: none;

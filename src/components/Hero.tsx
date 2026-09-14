@@ -15,7 +15,7 @@ const SLIDE_INTERVAL_MS = 7000;
 function DesignedBackdrop() {
   return (
     <div className="absolute inset-0" aria-hidden>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_25%_15%,#1e293b_0%,#0b1220_45%,#020617_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_25%_15%,#2a241d_0%,#1b1712_45%,#14110e_100%)]" />
       <div
         className="absolute inset-0 opacity-[0.06]"
         style={{
@@ -53,7 +53,7 @@ export default function Hero({ images = [] }: { images?: HeroImage[] }) {
   }, [images.length]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-slate-950 overflow-hidden pt-20">
+    <section className="relative min-h-screen flex items-center justify-center bg-ground overflow-hidden pt-20">
       {/* Arka plan katmani */}
       <div className="absolute inset-0">
         {images.length > 0 ? (
@@ -85,9 +85,9 @@ export default function Hero({ images = [] }: { images?: HeroImage[] }) {
        * butonlarin kontrasti garanti altina alinir; acik veya kalabalik bir
        * gorsel tasarimi bozamaz.
        */}
-      <div className="absolute inset-0 bg-slate-950/40" aria-hidden />
+      <div className="absolute inset-0 bg-ground/40" aria-hidden />
       <div
-        className="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-slate-950/25 to-slate-950"
+        className="absolute inset-0 bg-gradient-to-b from-ground/90 via-ground/25 to-ground"
         aria-hidden
       />
       <div
@@ -95,26 +95,23 @@ export default function Hero({ images = [] }: { images?: HeroImage[] }) {
         aria-hidden
         style={{
           background:
-            "radial-gradient(ellipse 75% 55% at 50% 45%, transparent 0%, rgba(2,6,23,0.6) 100%)",
+            "radial-gradient(ellipse 75% 55% at 50% 45%, transparent 0%, rgba(20,17,14,0.62) 100%)",
         }}
       />
 
       {/* Icerik */}
-      <div className="relative max-w-5xl mx-auto px-6 text-center text-white z-10 py-24">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-6 backdrop-blur-sm">
+      <div className="relative max-w-5xl mx-auto px-6 text-center text-fg z-10 py-24">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-bronze/10 border border-bronze/30 text-bronze-light text-xs font-semibold uppercase tracking-widest mb-6 backdrop-blur-sm">
           <Building2 className="w-3.5 h-3.5" />
           <span>Kadıköy Bostancı&apos;nın Prestijli Yapıları</span>
         </div>
 
-        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6 font-sans drop-shadow-[0_2px_24px_rgba(2,6,23,0.9)]">
+        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6 font-sans drop-shadow-[0_2px_24px_rgba(20,17,14,0.92)]">
           Geleceği İnşa Ediyoruz, <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-200 to-amber-500">
-            Kalıcı Değerler
-          </span>{" "}
-          Sunuyoruz.
+          <span className="text-bronze-light">Kalıcı Değerler</span> Sunuyoruz.
         </h1>
 
-        <p className="text-lg md:text-xl text-slate-200 max-w-2xl mx-auto mb-10 leading-relaxed font-light drop-shadow-[0_2px_12px_rgba(2,6,23,0.9)]">
+        <p className="text-lg md:text-xl text-fg max-w-2xl mx-auto mb-10 leading-relaxed font-light drop-shadow-[0_2px_12px_rgba(20,17,14,0.92)]">
           Kısa İnşaat güvencesiyle Bostancı ve çevresinde modern mimari, yüksek
           deprem güvenliği ve estetik yaşam alanları üretiyoruz.
         </p>
@@ -122,17 +119,17 @@ export default function Hero({ images = [] }: { images?: HeroImage[] }) {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
             href="/gayrimenkuller"
-            className="w-full sm:w-auto flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-500 text-white font-semibold px-8 py-4 rounded-md transition-all shadow-xl shadow-amber-900/30"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 bg-bronze hover:bg-bronze-strong text-bronze-ink font-semibold px-8 py-4 rounded-md transition-all shadow-xl shadow-bronze-dark/30"
           >
             <Home className="w-5 h-5" />
             <span>Satılık &amp; Kiralık İlanlar</span>
           </Link>
           <Link
             href="/projeler"
-            className="w-full sm:w-auto flex items-center justify-center gap-2 border border-slate-600 hover:border-slate-400 bg-slate-900/60 text-slate-100 hover:text-white font-semibold px-8 py-4 rounded-md backdrop-blur-sm transition-all"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 border border-line-strong hover:border-fg-muted bg-surface/60 text-fg hover:text-fg font-semibold px-8 py-4 rounded-md backdrop-blur-sm transition-all"
           >
             <span>Devam Eden Projelerimiz</span>
-            <ChevronRight className="w-4 h-4 text-amber-500" />
+            <ChevronRight className="w-4 h-4 text-bronze" />
           </Link>
         </div>
       </div>
@@ -149,8 +146,8 @@ export default function Hero({ images = [] }: { images?: HeroImage[] }) {
               aria-current={index === active}
               className={`h-1 rounded-full transition-all ${
                 index === active
-                  ? "w-10 bg-amber-500"
-                  : "w-5 bg-white/40 hover:bg-white/70"
+                  ? "w-10 bg-bronze"
+                  : "w-5 bg-fg/30 hover:bg-fg/60"
               }`}
             />
           ))}

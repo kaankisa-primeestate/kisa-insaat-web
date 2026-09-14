@@ -30,8 +30,8 @@ export default function Header({ settings }: { settings: SiteSettings }) {
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-slate-900/95 backdrop-blur-md py-4 shadow-xl border-b border-slate-800"
-          : "bg-gradient-to-b from-slate-950/80 to-transparent py-6"
+          ? "bg-surface/95 backdrop-blur-md py-4 shadow-xl border-b border-line"
+          : "bg-gradient-to-b from-ground/80 to-transparent py-6"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between gap-6">
@@ -51,18 +51,18 @@ export default function Header({ settings }: { settings: SiteSettings }) {
               isScrolled ? "h-7 md:h-8" : "h-8 md:h-10"
             }`}
           />
-          <span className="hidden sm:block w-px h-7 bg-slate-700 group-hover:bg-amber-500/60 transition-colors" />
-          <span className="hidden sm:block text-sm font-semibold tracking-[0.22em] text-white uppercase">
+          <span className="hidden sm:block w-px h-7 bg-surface-3 group-hover:bg-bronze/60 transition-colors" />
+          <span className="hidden sm:block text-sm font-semibold tracking-[0.22em] text-fg uppercase">
             İnşaat
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-200">
+        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-fg">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="hover:text-amber-500 transition-colors whitespace-nowrap"
+              className="hover:text-bronze transition-colors whitespace-nowrap"
             >
               {link.label}
             </Link>
@@ -75,7 +75,7 @@ export default function Header({ settings }: { settings: SiteSettings }) {
               href={whatsappHref(settings.whatsapp)}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2.5 rounded-md transition-all shadow-lg shadow-emerald-900/20"
+              className="flex items-center gap-2 bg-wa hover:bg-wa-hover text-fg text-xs font-semibold px-4 py-2.5 rounded-md transition-all shadow-lg shadow-wa/20"
             >
               <MessageCircle className="w-4 h-4" />
               <span>WhatsApp</span>
@@ -84,9 +84,9 @@ export default function Header({ settings }: { settings: SiteSettings }) {
           {settings.phone && (
             <a
               href={telHref(settings.phone)}
-              className="flex items-center gap-2 border border-slate-700 hover:border-amber-500 text-white text-xs font-semibold px-4 py-2.5 rounded-md transition-all whitespace-nowrap"
+              className="flex items-center gap-2 border border-line-strong hover:border-bronze text-fg text-xs font-semibold px-4 py-2.5 rounded-md transition-all whitespace-nowrap"
             >
-              <Phone className="w-4 h-4 text-amber-500" />
+              <Phone className="w-4 h-4 text-fg-muted" />
               <span>{formatPhone(settings.phone)}</span>
             </a>
           )}
@@ -97,31 +97,31 @@ export default function Header({ settings }: { settings: SiteSettings }) {
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label={mobileMenuOpen ? "Menüyü kapat" : "Menüyü aç"}
           aria-expanded={mobileMenuOpen}
-          className="md:hidden text-white p-2 focus:outline-none"
+          className="md:hidden text-fg p-2 focus:outline-none"
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
       {mobileMenuOpen && (
-        <div className="md:hidden bg-slate-900 border-b border-slate-800 px-6 py-6 space-y-4">
+        <div className="md:hidden bg-surface border-b border-line px-6 py-6 space-y-4">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="block text-slate-200 hover:text-amber-500 font-medium"
+              className="block text-fg hover:text-bronze font-medium"
             >
               {link.label}
             </Link>
           ))}
           {settings.whatsapp && (
-            <div className="pt-4 border-t border-slate-800">
+            <div className="pt-4 border-t border-line">
               <a
                 href={whatsappHref(settings.whatsapp)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-emerald-600 text-white text-sm font-semibold py-2.5 rounded-md"
+                className="flex items-center justify-center gap-2 bg-wa text-fg text-sm font-semibold py-2.5 rounded-md"
               >
                 <MessageCircle className="w-4 h-4" />
                 <span>WhatsApp İletişim</span>

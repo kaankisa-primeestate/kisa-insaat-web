@@ -18,7 +18,7 @@ const TYPE_FILTERS: { value: "all" | ListingType; label: string }[] = [
  */
 function statusBadge(listingType: ListingType, status: PropertyStatus) {
   if (status === "reserved") {
-    return { label: "Opsiyonlu", className: "bg-amber-600 text-white" };
+    return { label: "Opsiyonlu", className: "bg-bronze text-bronze-ink" };
   }
   if (status === "closed") {
     const label =
@@ -27,7 +27,7 @@ function statusBadge(listingType: ListingType, status: PropertyStatus) {
         : listingType === "sale"
           ? "Satıldı"
           : "İşlem Tamamlandı";
-    return { label, className: "bg-slate-700 text-slate-300" };
+    return { label, className: "bg-surface-3 text-fg-muted" };
   }
   const label =
     listingType === "rent"
@@ -35,7 +35,7 @@ function statusBadge(listingType: ListingType, status: PropertyStatus) {
       : listingType === "sale"
         ? "Satılık"
         : "Satılık / Kiralık";
-  return { label, className: "bg-emerald-600 text-white" };
+  return { label, className: "bg-wa text-fg" };
 }
 
 function PriceBlock({ property }: { property: Property }) {
@@ -46,24 +46,24 @@ function PriceBlock({ property }: { property: Property }) {
     <div className="min-w-0 space-y-1">
       {showSale && (
         <div>
-          <div className="text-[10px] text-slate-500 uppercase">
+          <div className="text-[10px] text-fg-dim uppercase">
             Satış Fiyatı
           </div>
-          <div className="text-xs font-bold text-amber-400 truncate">
+          <div className="text-xs font-bold text-bronze-light truncate">
             {property.salePrice}
           </div>
         </div>
       )}
       {showRent && (
         <div>
-          <div className="text-[10px] text-slate-500 uppercase">Aylık Kira</div>
-          <div className="text-xs font-bold text-emerald-400 truncate">
+          <div className="text-[10px] text-fg-dim uppercase">Aylık Kira</div>
+          <div className="text-xs font-bold text-wa-text truncate">
             {property.rentPrice}
           </div>
         </div>
       )}
       {property.dues && (
-        <div className="text-[10px] text-slate-500">
+        <div className="text-[10px] text-fg-dim">
           Aidat: {property.dues}
         </div>
       )}
@@ -101,11 +101,11 @@ export default function PropertiesGrid({
   return (
     <>
       {(showTypeFilter || roomOptions.length > 2) && (
-        <div className="bg-slate-900 p-4 rounded-xl border border-slate-800 mb-12 space-y-4">
+        <div className="bg-surface p-4 rounded-xl border border-line mb-12 space-y-4">
           {showTypeFilter && (
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-2 text-slate-300 text-xs font-semibold">
-                <Filter className="w-4 h-4 text-amber-500 shrink-0" />
+              <div className="flex items-center gap-2 text-fg-muted text-xs font-semibold">
+                <Filter className="w-4 h-4 text-fg-dim shrink-0" />
                 <span>İlan Tipi:</span>
               </div>
               <div className="flex flex-wrap justify-center gap-2">
@@ -117,8 +117,8 @@ export default function PropertiesGrid({
                     aria-pressed={type === item.value}
                     className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
                       type === item.value
-                        ? "bg-amber-600 text-white"
-                        : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+                        ? "bg-bronze text-bronze-ink"
+                        : "bg-surface-2 text-fg-muted hover:bg-surface-3"
                     }`}
                   >
                     {item.label}
@@ -129,9 +129,9 @@ export default function PropertiesGrid({
           )}
 
           {roomOptions.length > 2 && (
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4 border-t border-slate-800 pt-4 first:border-0 first:pt-0">
-              <div className="flex items-center gap-2 text-slate-300 text-xs font-semibold">
-                <Filter className="w-4 h-4 text-amber-500 shrink-0" />
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4 border-t border-line pt-4 first:border-0 first:pt-0">
+              <div className="flex items-center gap-2 text-fg-muted text-xs font-semibold">
+                <Filter className="w-4 h-4 text-fg-dim shrink-0" />
                 <span>Oda Sayısı:</span>
               </div>
               <div className="flex flex-wrap justify-center gap-2">
@@ -143,8 +143,8 @@ export default function PropertiesGrid({
                     aria-pressed={room === option}
                     className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
                       room === option
-                        ? "bg-amber-600 text-white"
-                        : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+                        ? "bg-bronze text-bronze-ink"
+                        : "bg-surface-2 text-fg-muted hover:bg-surface-3"
                     }`}
                   >
                     {option === "all" ? "Tümü" : option}
@@ -157,7 +157,7 @@ export default function PropertiesGrid({
       )}
 
       {visible.length === 0 ? (
-        <p className="text-center text-sm text-slate-400 py-16">
+        <p className="text-center text-sm text-fg-muted py-16">
           Bu kriterlere uyan gayrimenkul bulunmuyor.
         </p>
       ) : (
@@ -167,7 +167,7 @@ export default function PropertiesGrid({
             return (
               <article
                 key={property._id}
-                className="bg-slate-900 rounded-xl overflow-hidden border border-slate-800 hover:border-slate-700 transition-all flex flex-col group"
+                className="bg-surface rounded-xl overflow-hidden border border-line hover:border-line-strong transition-all flex flex-col group"
               >
                 <div className="relative h-64 overflow-hidden">
                   <SanityImg
@@ -178,7 +178,7 @@ export default function PropertiesGrid({
                   />
                   {property.projectTitle && (
                     <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 rounded-md bg-slate-950/80 text-amber-400 text-xs font-bold border border-amber-500/30 backdrop-blur-md">
+                      <span className="px-3 py-1 rounded-md bg-ground/80 text-bronze-light text-xs font-bold border border-bronze/30 backdrop-blur-md">
                         {property.projectTitle}
                       </span>
                     </div>
@@ -194,42 +194,42 @@ export default function PropertiesGrid({
 
                 <div className="p-6 flex flex-col grow justify-between space-y-6">
                   <div className="space-y-3">
-                    <h3 className="text-xl font-bold text-white group-hover:text-amber-400 transition-colors">
+                    <h3 className="text-xl font-bold text-fg group-hover:text-bronze-light transition-colors">
                       {property.title}
                     </h3>
-                    <p className="text-xs text-slate-400 leading-relaxed line-clamp-4">
+                    <p className="text-xs text-fg-muted leading-relaxed line-clamp-4">
                       {property.description}
                     </p>
 
-                    <div className="grid grid-cols-3 gap-2 pt-2 border-t border-slate-800 text-center">
-                      <div className="bg-slate-950/50 p-2 rounded border border-slate-800/80">
-                        <div className="text-[10px] text-slate-500 uppercase">
+                    <div className="grid grid-cols-3 gap-2 pt-2 border-t border-line text-center">
+                      <div className="bg-ground/50 p-2 rounded border border-line/80">
+                        <div className="text-[10px] text-fg-dim uppercase">
                           Tip
                         </div>
-                        <div className="text-xs font-bold text-slate-200">
+                        <div className="text-xs font-bold text-fg">
                           {property.roomCount}
                         </div>
                       </div>
-                      <div className="bg-slate-950/50 p-2 rounded border border-slate-800/80">
-                        <div className="text-[10px] text-slate-500 uppercase">
+                      <div className="bg-ground/50 p-2 rounded border border-line/80">
+                        <div className="text-[10px] text-fg-dim uppercase">
                           Brüt
                         </div>
-                        <div className="text-xs font-bold text-slate-200">
+                        <div className="text-xs font-bold text-fg">
                           {property.grossArea} m²
                         </div>
                       </div>
-                      <div className="bg-slate-950/50 p-2 rounded border border-slate-800/80">
-                        <div className="text-[10px] text-slate-500 uppercase">
+                      <div className="bg-ground/50 p-2 rounded border border-line/80">
+                        <div className="text-[10px] text-fg-dim uppercase">
                           Kat
                         </div>
-                        <div className="text-xs font-bold text-slate-200">
+                        <div className="text-xs font-bold text-fg">
                           {property.floor}
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="pt-4 border-t border-slate-800 flex items-end justify-between gap-4">
+                  <div className="pt-4 border-t border-line flex items-end justify-between gap-4">
                     <PriceBlock property={property} />
 
                     {whatsapp && property.status !== "closed" && (
@@ -239,7 +239,7 @@ export default function PropertiesGrid({
                         )}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition-colors shrink-0"
+                        className="flex items-center gap-1.5 bg-wa hover:bg-wa-hover text-fg text-xs font-semibold px-4 py-2.5 rounded-lg transition-colors shrink-0"
                       >
                         <MessageCircle className="w-4 h-4" />
                         <span>Bilgi Al</span>

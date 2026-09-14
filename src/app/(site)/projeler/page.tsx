@@ -31,13 +31,13 @@ export default async function ProjectsPage({
   return (
     <main className="pt-32 pb-24 max-w-7xl mx-auto px-6 w-full">
       <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">
-        <div className="text-amber-500 text-xs font-bold uppercase tracking-widest">
+        <div className="text-bronze text-xs font-bold uppercase tracking-widest">
           Mimari Portföyümüz
         </div>
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-fg">
           Projelerimiz
         </h1>
-        <p className="text-slate-400 text-base leading-relaxed">
+        <p className="text-fg-muted text-base leading-relaxed">
           Türkiye genelinde hayata geçirdiğimiz konut, ticari yapı ve kentsel
           dönüşüm projelerimiz.
         </p>

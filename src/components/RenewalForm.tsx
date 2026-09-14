@@ -25,7 +25,7 @@ const EMPTY: Fields = {
 };
 
 const INPUT_CLASS =
-  "w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-amber-500 transition-colors";
+  "w-full bg-ground border border-line rounded-lg px-4 py-3 text-sm text-fg placeholder:text-fg-dim focus:outline-none focus:border-bronze transition-colors";
 
 function Field({
   label,
@@ -38,8 +38,8 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-xs font-medium text-slate-300 mb-2">
-        {label} {required && <span className="text-amber-500">*</span>}
+      <label className="block text-xs font-medium text-fg-muted mb-2">
+        {label} {required && <span className="text-bronze">*</span>}
       </label>
       {children}
     </div>
@@ -92,11 +92,11 @@ export default function RenewalForm({
   if (sent) {
     return (
       <div className="text-center py-12 space-y-4">
-        <div className="w-16 h-16 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-full flex items-center justify-center mx-auto">
+        <div className="w-16 h-16 bg-wa/10 border border-wa/30 text-wa-text rounded-full flex items-center justify-center mx-auto">
           <CheckCircle2 className="w-8 h-8" />
         </div>
-        <h2 className="text-2xl font-bold text-white">Başvurunuz İletildi</h2>
-        <p className="text-slate-400 text-sm max-w-md mx-auto leading-relaxed">
+        <h2 className="text-2xl font-bold text-fg">Başvurunuz İletildi</h2>
+        <p className="text-fg-muted text-sm max-w-md mx-auto leading-relaxed">
           Bilgileriniz WhatsApp üzerinden tarafımıza aktarıldı. Mesaj penceresi
           açılmadıysa lütfen doğrudan bizi arayın. En kısa sürede sizinle
           iletişime geçeceğiz.
@@ -108,7 +108,7 @@ export default function RenewalForm({
             setConsent(false);
             setSent(false);
           }}
-          className="mt-4 px-6 py-2.5 bg-slate-800 text-slate-300 hover:text-white rounded-lg text-xs font-semibold transition-colors"
+          className="mt-4 px-6 py-2.5 bg-surface-2 text-fg-muted hover:text-fg rounded-lg text-xs font-semibold transition-colors"
         >
           Yeni Başvuru Yap
         </button>
@@ -118,7 +118,7 @@ export default function RenewalForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <h2 className="text-xl font-bold text-white mb-2">Teklif &amp; Bilgi Formu</h2>
+      <h2 className="text-xl font-bold text-fg mb-2">Teklif &amp; Bilgi Formu</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Field label="Adınız Soyadınız" required>
@@ -204,20 +204,20 @@ export default function RenewalForm({
 
       {kvkkText && (
         <div className="space-y-3">
-          <label className="flex items-start gap-3 text-xs text-slate-300 leading-relaxed cursor-pointer">
+          <label className="flex items-start gap-3 text-xs text-fg-muted leading-relaxed cursor-pointer">
             <input
               type="checkbox"
               required
               checked={consent}
               onChange={(event) => setConsent(event.target.checked)}
-              className="mt-0.5 w-4 h-4 accent-amber-600 shrink-0"
+              className="mt-0.5 w-4 h-4 accent-bronze shrink-0"
             />
             <span>
               Kişisel verilerimin{" "}
               <button
                 type="button"
                 onClick={() => setShowKvkk((open) => !open)}
-                className="text-amber-400 hover:underline"
+                className="text-bronze-light hover:underline"
               >
                 KVKK Aydınlatma Metni
               </button>{" "}
@@ -226,7 +226,7 @@ export default function RenewalForm({
           </label>
 
           {showKvkk && (
-            <div className="bg-slate-950 border border-slate-800 rounded-lg p-4 max-h-56 overflow-y-auto text-[11px] text-slate-400 leading-relaxed whitespace-pre-line">
+            <div className="bg-ground border border-line rounded-lg p-4 max-h-56 overflow-y-auto text-[11px] text-fg-muted leading-relaxed whitespace-pre-line">
               {kvkkText}
             </div>
           )}
@@ -236,13 +236,13 @@ export default function RenewalForm({
       <button
         type="submit"
         disabled={!consent}
-        className="w-full flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-500 disabled:bg-slate-800 disabled:text-slate-500 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-lg transition-colors shadow-lg shadow-amber-900/20"
+        className="w-full flex items-center justify-center gap-2 bg-bronze hover:bg-bronze-strong disabled:bg-surface-2 disabled:text-fg-dim disabled:cursor-not-allowed text-fg font-semibold py-4 rounded-lg transition-colors shadow-lg shadow-bronze-dark/20"
       >
         <Send className="w-4 h-4" />
         <span>Teklif Talebini Gönder</span>
       </button>
 
-      <p className="text-[11px] text-slate-500 text-center leading-relaxed">
+      <p className="text-[11px] text-fg-dim text-center leading-relaxed">
         Gönder&apos;e bastığınızda bilgileriniz WhatsApp üzerinden tarafımıza
         iletilir.
       </p>

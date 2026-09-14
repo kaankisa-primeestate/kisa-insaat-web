@@ -24,7 +24,7 @@ function StatusBadge({
 }) {
   if (status === "ongoing") {
     return (
-      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/90 text-white text-xs font-bold backdrop-blur-md">
+      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-wa text-fg text-xs font-bold backdrop-blur-md">
         <Clock className="w-3.5 h-3.5" />
         Devam Ediyor (%{completion ?? 0})
       </span>
@@ -32,14 +32,14 @@ function StatusBadge({
   }
   if (status === "completed") {
     return (
-      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800/90 text-amber-400 border border-amber-500/30 text-xs font-bold backdrop-blur-md">
+      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-2/90 text-bronze-light border border-bronze/30 text-xs font-bold backdrop-blur-md">
         <CheckCircle2 className="w-3.5 h-3.5" />
         Tamamlandı
       </span>
     );
   }
   return (
-    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800/90 text-sky-300 border border-sky-400/30 text-xs font-bold backdrop-blur-md">
+    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-2/90 text-planned border border-planned/30 text-xs font-bold backdrop-blur-md">
       <Ruler className="w-3.5 h-3.5" />
       Planlanan
     </span>
@@ -67,7 +67,7 @@ export default function ProjectsGrid({
     <>
       {availableFilters.length > 2 && (
         <div className="flex justify-center mb-12">
-          <div className="inline-flex flex-wrap justify-center bg-slate-900 p-1.5 rounded-lg border border-slate-800 gap-1">
+          <div className="inline-flex flex-wrap justify-center bg-surface p-1.5 rounded-lg border border-line gap-1">
             {availableFilters.map((item) => (
               <button
                 key={item.value}
@@ -76,8 +76,8 @@ export default function ProjectsGrid({
                 aria-pressed={filter === item.value}
                 className={`px-5 py-2.5 rounded-md text-xs font-semibold transition-all ${
                   filter === item.value
-                    ? "bg-amber-600 text-white shadow-lg shadow-amber-900/20"
-                    : "text-slate-400 hover:text-white"
+                    ? "bg-bronze text-bronze-ink shadow-lg shadow-bronze-dark/20"
+                    : "text-fg-muted hover:text-fg"
                 }`}
               >
                 {item.label}
@@ -88,7 +88,7 @@ export default function ProjectsGrid({
       )}
 
       {visible.length === 0 ? (
-        <p className="text-center text-sm text-slate-400 py-16">
+        <p className="text-center text-sm text-fg-muted py-16">
           Bu kategoride henüz proje bulunmuyor.
         </p>
       ) : (
@@ -97,7 +97,7 @@ export default function ProjectsGrid({
             <Link
               key={project._id}
               href={`/projeler/${project.slug}`}
-              className="bg-slate-900 rounded-xl overflow-hidden border border-slate-800 hover:border-amber-600/50 transition-all flex flex-col group"
+              className="bg-surface rounded-xl overflow-hidden border border-line hover:border-bronze/50 transition-all flex flex-col group"
             >
               {/* Mimari render'lar dikeydir; kart görseli 4:5 oranında tutulur. */}
               <div className="relative aspect-4/5 overflow-hidden">
@@ -116,27 +116,27 @@ export default function ProjectsGrid({
 
               <div className="p-6 flex flex-col grow justify-between space-y-4">
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-slate-400 text-xs">
-                    <MapPin className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                  <div className="flex items-center gap-2 text-fg-muted text-xs">
+                    <MapPin className="w-3.5 h-3.5 text-fg-dim shrink-0" />
                     <span>{project.location}</span>
                   </div>
-                  <h3 className="text-xl font-bold text-white group-hover:text-amber-400 transition-colors">
+                  <h3 className="text-xl font-bold text-fg group-hover:text-bronze-light transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-xs text-slate-400 leading-relaxed line-clamp-3">
+                  <p className="text-xs text-fg-muted leading-relaxed line-clamp-3">
                     {project.description}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 gap-3">
+                <div className="pt-4 border-t border-line flex items-center justify-between text-xs text-fg-muted gap-3">
                   <div className="flex items-center gap-1.5 min-w-0">
-                    <Calendar className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                    <Calendar className="w-3.5 h-3.5 text-fg-dim shrink-0" />
                     <span className="truncate">
                       Teslim: {project.deliveryDate}
                     </span>
                   </div>
                   {project.adaParsel && (
-                    <span className="font-mono text-[11px] text-slate-500 shrink-0">
+                    <span className="font-mono text-[11px] text-fg-dim shrink-0">
                       {project.adaParsel}
                     </span>
                   )}
