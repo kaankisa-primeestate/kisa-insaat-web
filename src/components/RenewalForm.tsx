@@ -204,7 +204,7 @@ export default function RenewalForm({
 
       {kvkkText && (
         <div className="space-y-3">
-          <label className="flex items-start gap-3 text-xs text-fg-muted leading-relaxed cursor-pointer">
+          <label className="flex items-start gap-3 text-sm text-fg-muted leading-relaxed cursor-pointer">
             <input
               type="checkbox"
               required

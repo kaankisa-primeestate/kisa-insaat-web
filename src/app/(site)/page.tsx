@@ -33,7 +33,7 @@ export default function Home() {
               {HIGHLIGHTS.map((item) => (
                 <div
                   key={item}
-                  className="flex items-start gap-3 text-sm text-fg"
+                  className="flex items-start gap-3 text-base text-fg"
                 >
                   <CheckCircle2 className="w-5 h-5 text-bronze shrink-0 mt-0.5" />
                   <span>{item}</span>

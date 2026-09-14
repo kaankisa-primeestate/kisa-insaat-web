@@ -197,7 +197,7 @@ export default function PropertiesGrid({
                     <h3 className="text-xl font-bold text-fg group-hover:text-bronze-light transition-colors">
                       {property.title}
                     </h3>
-                    <p className="text-xs text-fg-muted leading-relaxed line-clamp-4">
+                    <p className="text-sm text-fg-muted leading-relaxed line-clamp-4">
                       {property.description}
                     </p>
 

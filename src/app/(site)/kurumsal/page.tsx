@@ -28,17 +28,17 @@ export default function CorporatePage() {
           <h2 className="text-2xl font-bold text-fg border-l-2 border-bronze pl-3">
             Mühendislik Disiplini ve Güven İlkesi
           </h2>
-          <p className="text-fg-muted text-sm leading-relaxed">
+          <p className="text-fg-muted text-base leading-relaxed">
             İnşaat sektöründe kalite standartlarını ve güvenilirliği ön planda
             tutan Kısa İnşaat, Türkiye genelinde konut, ticari yapı ve kentsel
             dönüşüm projeleri gerçekleştirmektedir.
           </p>
-          <p className="text-fg-muted text-sm leading-relaxed">
+          <p className="text-fg-muted text-base leading-relaxed">
             İstanbul Kadıköy Bağdat Caddesi ve çevresindeki kentsel dönüşüm
             uygulamalarında ise özel bir uzmanlığa sahibiz; bölgenin imar
             dokusunu ve hak sahipliği süreçlerini yakından tanıyoruz.
           </p>
-          <p className="text-fg-muted text-sm leading-relaxed">
+          <p className="text-fg-muted text-base leading-relaxed">
             Her projemizde son deprem yönetmeliklerine tam uyum, yüksek nitelikli
             inşaat malzemeleri kullanımı ve modern mimari çizgiler standart
             olarak uygulanmaktadır.
@@ -52,7 +52,7 @@ export default function CorporatePage() {
               <h3 className="text-base font-bold text-fg">
                 Kalite Standardımız
               </h3>
-              <p className="text-xs text-fg-muted leading-relaxed mt-1">
+              <p className="text-sm text-fg-muted leading-relaxed mt-1">
                 Projelerimizin her aşamasında beton ve demir laboratuvar
                 testleri eksiksiz uygulanır.
               </p>
@@ -65,7 +65,7 @@ export default function CorporatePage() {
               <h3 className="text-base font-bold text-fg">
                 Zamanında Teslimat
               </h3>
-              <p className="text-xs text-fg-muted leading-relaxed mt-1">
+              <p className="text-sm text-fg-muted leading-relaxed mt-1">
                 Sözleşmede taahhüt edilen teslim tarihlerine sadık kalınarak
                 şeffaf süreç yönetilir.
               </p>

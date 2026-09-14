@@ -169,7 +169,7 @@ export default async function ProjectDetailPage({ params }: Params) {
                   <ShieldCheck className="w-5 h-5 text-bronze shrink-0" />
                   <span>Teknik Şartname &amp; Standartlar</span>
                 </h2>
-                <ul className="space-y-3 text-xs text-fg-muted">
+                <ul className="space-y-3 text-sm text-fg-muted">
                   {project.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-2.5">
                       <CheckCircle2 className="w-4 h-4 text-bronze shrink-0 mt-0.5" />

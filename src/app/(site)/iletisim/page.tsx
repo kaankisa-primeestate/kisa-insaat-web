@@ -33,7 +33,7 @@ export default async function ContactPage() {
             <MapPin className="w-6 h-6" />
           </div>
           <h2 className="text-lg font-bold text-fg">Merkez Ofisimiz</h2>
-          <p className="text-xs text-fg-muted leading-relaxed">
+          <p className="text-sm text-fg-muted leading-relaxed">
             {settings.address}
           </p>
         </div>
@@ -43,7 +43,7 @@ export default async function ContactPage() {
             <Phone className="w-6 h-6" />
           </div>
           <h2 className="text-lg font-bold text-fg">Telefon &amp; WhatsApp</h2>
-          <p className="text-xs text-fg-muted leading-relaxed space-y-1">
+          <p className="text-sm text-fg-muted leading-relaxed space-y-1">
             {settings.phone && (
               <>
                 Ofis:{" "}
@@ -80,7 +80,7 @@ export default async function ContactPage() {
           <h2 className="text-lg font-bold text-fg">
             E-Posta &amp; Çalışma Saatleri
           </h2>
-          <p className="text-xs text-fg-muted leading-relaxed">
+          <p className="text-sm text-fg-muted leading-relaxed">
             {settings.email && (
               <>
                 <a

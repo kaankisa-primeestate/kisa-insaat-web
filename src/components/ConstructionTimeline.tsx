@@ -42,7 +42,7 @@ export default function ConstructionTimeline({
               </div>
 
               <h3 className="text-lg font-bold text-fg">{update.title}</h3>
-              <p className="text-xs text-fg-muted leading-relaxed whitespace-pre-line">
+              <p className="text-sm text-fg-muted leading-relaxed whitespace-pre-line">
                 {update.description}
               </p>
 

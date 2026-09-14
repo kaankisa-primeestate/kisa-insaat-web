@@ -61,7 +61,7 @@ export default async function UrbanRenewalPage() {
                     <h3 className="text-sm font-semibold text-fg mb-1">
                       {step.title}
                     </h3>
-                    <p className="text-xs text-fg-muted leading-relaxed">
+                    <p className="text-sm text-fg-muted leading-relaxed">
                       {step.body}
                     </p>
                   </div>
@@ -76,7 +76,7 @@ export default async function UrbanRenewalPage() {
               <h2 className="text-sm font-bold text-fg">
                 Yüksek Deprem Güvenliği
               </h2>
-              <p className="text-xs text-fg-muted leading-relaxed">
+              <p className="text-sm text-fg-muted leading-relaxed">
                 Projelerimizde güncel deprem yönetmeliğine uygun beton sınıfı ve
                 temel sistemi standart olarak uygulanır.
               </p>

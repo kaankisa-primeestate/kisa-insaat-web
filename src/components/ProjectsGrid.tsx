@@ -123,7 +123,7 @@ export default function ProjectsGrid({
                   <h3 className="text-xl font-bold text-fg group-hover:text-bronze-light transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-xs text-fg-muted leading-relaxed line-clamp-3">
+                  <p className="text-sm text-fg-muted leading-relaxed line-clamp-3">
                     {project.description}
                   </p>
                 </div>
