@@ -4,7 +4,7 @@ import { galleryField, imageField } from "../lib/fields";
 export const PROJECT_STATUSES = [
   { title: "Planlanan", value: "planned" },
   { title: "Devam Ediyor", value: "ongoing" },
-  { title: "Tamamlandi", value: "completed" },
+  { title: "Tamamlandı", value: "completed" },
 ] as const;
 
 export default defineType({
@@ -13,25 +13,25 @@ export default defineType({
   type: "document",
   groups: [
     { name: "genel", title: "Genel Bilgiler", default: true },
-    { name: "gorseller", title: "Gorseller" },
-    { name: "detay", title: "Aciklama & Sartname" },
+    { name: "gorseller", title: "Görseller" },
+    { name: "detay", title: "Açıklama & Şartname" },
   ],
   fields: [
     defineField({
       name: "title",
-      title: "Proje Adi",
+      title: "Proje Adı",
       type: "string",
       group: "genel",
-      description: "Kart ve sayfa basliginda gorunur. 3-60 karakter.",
+      description: "Kart ve sayfa basliginda görünür. 3-60 karakter.",
       validation: (Rule) => Rule.required().min(3).max(60),
     }),
     defineField({
       name: "slug",
-      title: "URL Baglantisi",
+      title: "URL Bağlantısı",
       type: "slug",
       group: "genel",
       description:
-        "Proje adindan otomatik uretilir. Yayina alindiktan sonra degistirmeyin, eski baglantilar kirilir.",
+        "Proje adından otomatik üretilir. Yayina alindiktan sonra değiştirmeyin, eski bağlantılar kirilir.",
       options: { source: "title", maxLength: 60 },
       validation: (Rule) => Rule.required(),
     }),
@@ -49,11 +49,11 @@ export default defineType({
     }),
     defineField({
       name: "completionPercentage",
-      title: "Tamamlanma Yuzdesi (%)",
+      title: "Tamamlanma Yüzdesi (%)",
       type: "number",
       group: "genel",
       description:
-        "Sadece devam eden projeler icin. Kartlarda ilerleme rozeti olarak gosterilir.",
+        "Sadece devam eden projeler için. Kartlarda ilerleme rozeti olarak gösterilir.",
       hidden: ({ document }) => document?.status !== "ongoing",
       validation: (Rule) =>
         Rule.min(0)
@@ -64,7 +64,7 @@ export default defineType({
             if (status !== "ongoing") return true;
             return typeof value === "number"
               ? true
-              : "Devam eden projeler icin tamamlanma yuzdesi zorunludur.";
+              : "Devam eden projeler için tamamlanma yüzdesi zorunludur.";
           }),
     }),
     defineField({
@@ -72,7 +72,7 @@ export default defineType({
       title: "Lokasyon",
       type: "string",
       group: "genel",
-      description: 'Ornek: "Bostanci, Kadikoy / Istanbul"',
+      description: 'Örnek: "Bostanci, Kadikoy / Istanbul"',
       validation: (Rule) => Rule.required().min(5).max(80),
     }),
     defineField({
@@ -80,7 +80,7 @@ export default defineType({
       title: "Ada / Parsel",
       type: "string",
       group: "genel",
-      description: 'Ornek: "901 Ada / 8 Parsel"',
+      description: 'Örnek: "901 Ada / 8 Parsel"',
       validation: (Rule) => Rule.max(40),
     }),
     defineField({
@@ -88,46 +88,48 @@ export default defineType({
       title: "Teslim Tarihi",
       type: "string",
       group: "genel",
-      description: 'Ornek: "Aralik 2026" veya tamamlanan projeler icin "2024"',
+      description: 'Örnek: "Aralik 2026" veya tamamlanan projeler için "2024"',
       validation: (Rule) => Rule.required().max(30),
     }),
     defineField({
       name: "order",
-      title: "Siralama",
+      title: "Sıralama",
       type: "number",
       group: "genel",
       description:
-        "Kucuk sayi once gosterilir. Bos birakirsaniz en yeni proje basa gelir.",
+        "Küçük sayi once gösterilir. Boş bırakırsanız en yeni proje basa gelir.",
       initialValue: 0,
     }),
 
-    imageField("mainImage", "Kapak Gorseli", "hero", {
+    imageField("mainImage", "Kapak Görseli", "hero", {
+      group: "gorseller",
       required: true,
       description:
-        "Proje kartinda ve detay sayfasinin ustunde kullanilir. Yatay, yuksek cozunurluklu bir gorsel secin.",
+        "Proje kartinda ve detay sayfasinin üstünde kullanılır. Yatay, yuksek çözünürlüklü bir görsel seçin.",
     }),
-    galleryField("gallery", "Gorsel Galerisi", "card", {
+    galleryField("gallery", "Görsel Galerisi", "card", {
+      group: "gorseller",
       max: 24,
       description:
-        "Proje detay sayfasindaki galeri. En fazla 24 gorsel. Sirasi surukleyerek degistirilebilir.",
+        "Proje detay sayfasindaki galeri. En fazla 24 görsel. Sırası sürükleyerek değiştirilebilir.",
     }),
 
     defineField({
       name: "description",
-      title: "Proje Aciklamasi",
+      title: "Proje Açıklaması",
       type: "text",
       rows: 6,
       group: "detay",
-      description: "80-600 karakter. Projenin konumunu ve one cikan yanlarini anlatin.",
+      description: "80-600 karakter. Projenin konumunu ve one çıkan yanlarini anlatın.",
       validation: (Rule) => Rule.required().min(80).max(600),
     }),
     defineField({
       name: "features",
-      title: "Teknik Ozellikler & Sartname",
+      title: "Teknik Özellikler & Şartname",
       type: "array",
       group: "detay",
       description:
-        "Her madde tek satir olmali. Ornek: \"C35/40 Yuksek Dayanimli Hazir Beton\". En fazla 14 madde.",
+        "Her madde tek satir olmalı. Örnek: \"C35/40 Yuksek Dayanimli Hazir Beton\". En fazla 14 madde.",
       of: [
         defineArrayMember({
           type: "string",
@@ -140,7 +142,7 @@ export default defineType({
   ],
   orderings: [
     {
-      title: "Siralama (manuel)",
+      title: "Sıralama (manuel)",
       name: "orderAsc",
       by: [
         { field: "order", direction: "asc" },

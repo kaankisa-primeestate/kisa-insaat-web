@@ -9,7 +9,7 @@ const SINGLETON_TYPES = new Set(["siteSettings"]);
 
 export default defineConfig({
   name: "kisa-insaat",
-  title: "Kisa Insaat Yonetim Paneli",
+  title: "Kısa İnşaat Yönetim Paneli",
   basePath: "/studio",
   projectId,
   dataset,

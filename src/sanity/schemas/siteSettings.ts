@@ -5,20 +5,20 @@ const TR_PHONE = /^\+90[0-9]{10}$/;
 
 export default defineType({
   name: "siteSettings",
-  title: "Site Ayarlari",
+  title: "Site Ayarları",
   type: "document",
   groups: [
-    { name: "iletisim", title: "Iletisim", default: true },
+    { name: "iletisim", title: "İletişim", default: true },
     { name: "sosyal", title: "Sosyal Medya" },
     { name: "seo", title: "SEO & Meta" },
   ],
   fields: [
     defineField({
       name: "companyName",
-      title: "Firma Adi",
+      title: "Firma Adı",
       type: "string",
       group: "iletisim",
-      initialValue: "Kisa Insaat",
+      initialValue: "Kısa İnşaat",
       validation: (Rule) => Rule.required().max(60),
     }),
     defineField({
@@ -27,23 +27,23 @@ export default defineType({
       type: "string",
       group: "iletisim",
       description:
-        "Ulke kodu ile bosluksuz yazin. Ornek: +902161234567. Sitede okunakli formata cevrilir.",
+        "Ulke kodu ile bosluksuz yazın. Örnek: +902161234567. Sitede okunakli formata cevrilir.",
       validation: (Rule) =>
         Rule.required().regex(TR_PHONE, {
           name: "telefon",
           invert: false,
-        }).error("Format: +90 ile baslayan 12 hane. Ornek: +902161234567"),
+        }).error("Format: +90 ile başlayan 12 hane. Örnek: +902161234567"),
     }),
     defineField({
       name: "whatsapp",
-      title: "WhatsApp Numarasi",
+      title: "WhatsApp Numarası",
       type: "string",
       group: "iletisim",
       description:
-        "WhatsApp butonunun yonlendirecegi numara. Ornek: +905321234567",
+        "WhatsApp butonunun yonlendirecegi numara. Örnek: +905321234567",
       validation: (Rule) =>
         Rule.required().regex(TR_PHONE, { name: "whatsapp" }).error(
-          "Format: +90 ile baslayan 12 hane. Ornek: +905321234567",
+          "Format: +90 ile başlayan 12 hane. Örnek: +905321234567",
         ),
     }),
     defineField({
@@ -59,16 +59,16 @@ export default defineType({
       type: "text",
       rows: 3,
       group: "iletisim",
-      description: "Footer ve iletisim sayfasinda gorunur. 20-200 karakter.",
+      description: "Footer ve iletisim sayfasinda görünür. 20-200 karakter.",
       validation: (Rule) => Rule.required().min(20).max(200),
     }),
     defineField({
       name: "mapEmbedUrl",
-      title: "Google Haritalar Gomme Adresi",
+      title: "Google Haritalar Gömme Adresi",
       type: "url",
       group: "iletisim",
       description:
-        'Google Haritalar > Paylas > Harita yerlestir menusundeki iframe icindeki src adresi. "https://www.google.com/maps/embed" ile baslamali.',
+        'Google Haritalar > Paylaş > Harita yerleştir menüsündeki iframe içindeki src adresi. "https://www.google.com/maps/embed" ile başlamalı.',
       validation: (Rule) =>
         Rule.required()
           .uri({ scheme: ["https"] })
@@ -76,15 +76,15 @@ export default defineType({
             typeof value !== "string" ||
             value.startsWith("https://www.google.com/maps/embed")
               ? true
-              : "Adres https://www.google.com/maps/embed ile baslamali. Paylasim linkini degil, gomme (embed) linkini kullanin.",
+              : "Adres https://www.google.com/maps/embed ile başlamalı. Paylasim linkini değil, gömme (embed) linkini kullanın.",
           ),
     }),
     defineField({
       name: "workingHours",
-      title: "Calisma Saatleri",
+      title: "Çalışma Saatleri",
       type: "string",
       group: "iletisim",
-      description: 'Ornek: "Pazartesi - Cumartesi: 09:00 - 18:30"',
+      description: 'Örnek: "Pazartesi - Cumartesi: 09:00 - 18:30"',
       validation: (Rule) => Rule.required().max(80),
     }),
 
@@ -93,7 +93,7 @@ export default defineType({
       title: "Instagram Adresi",
       type: "url",
       group: "sosyal",
-      description: "Bos birakirsaniz ikon sitede gosterilmez.",
+      description: "Boş bırakırsanız ikon sitede gösterilmez.",
       validation: (Rule) => Rule.uri({ scheme: ["https"] }),
     }),
     defineField({
@@ -113,35 +113,35 @@ export default defineType({
 
     defineField({
       name: "metaTitle",
-      title: "Site Basligi (Tarayici Sekmesi)",
+      title: "Site Başlığı (Tarayıcı Sekmesi)",
       type: "string",
       group: "seo",
       description:
-        "Google sonuclarinda baslik olarak gorunur. 30-60 karakter arasi idealdir.",
+        "Google sonuçlarında başlık olarak görünür. 30-60 karakter arasi idealdir.",
       validation: (Rule) => Rule.required().min(20).max(60),
     }),
     defineField({
       name: "metaDescription",
-      title: "Site Aciklamasi",
+      title: "Site Açıklaması",
       type: "text",
       rows: 3,
       group: "seo",
       description:
-        "Google sonuclarinda basligin altindaki aciklama. 120-160 karakter arasi idealdir.",
+        "Google sonuçlarında basligin altındaki açıklama. 120-160 karakter arasi idealdir.",
       validation: (Rule) => Rule.required().min(80).max(160),
     }),
     defineField({
       name: "kvkkText",
-      title: "KVKK Aydinlatma Metni",
+      title: "KVKK Aydınlatma Metni",
       type: "text",
       rows: 8,
       group: "seo",
       description:
-        "Teklif formunun altinda gosterilir. Kisisel veri toplayan formlar icin yasal zorunluluktur.",
+        "Teklif formunun altında gösterilir. Kişisel veri toplayan formlar için yasal zorunluluktur.",
       validation: (Rule) => Rule.required().min(100),
     }),
   ],
   preview: {
-    prepare: () => ({ title: "Site Ayarlari", subtitle: "Iletisim, sosyal medya, SEO" }),
+    prepare: () => ({ title: "Site Ayarları", subtitle: "İletişim, sosyal medya, SEO" }),
   },
 });

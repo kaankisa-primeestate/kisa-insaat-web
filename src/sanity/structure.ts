@@ -5,10 +5,10 @@ const SETTINGS_ID = "siteSettings";
 
 export const structure: StructureResolver = (S) =>
   S.list()
-    .title("Kisa Insaat Yonetimi")
+    .title("Kısa İnşaat Yönetimi")
     .items([
       S.listItem()
-        .title("Site Ayarlari")
+        .title("Site Ayarları")
         .id(SETTINGS_ID)
         .child(
           S.document().schemaType("siteSettings").documentId(SETTINGS_ID),
@@ -49,25 +49,25 @@ export const structure: StructureResolver = (S) =>
                 ),
               S.divider(),
               S.listItem()
-                .title("Tum Projeler")
+                .title("Tüm Projeler")
                 .child(
-                  S.documentTypeList("project").title("Tum Projeler"),
+                  S.documentTypeList("project").title("Tüm Projeler"),
                 ),
             ]),
         ),
 
       S.listItem()
-        .title("Satistaki Daireler")
+        .title("Satıştaki Daireler")
         .schemaType("property")
         .child(
           S.list()
-            .title("Satistaki Daireler")
+            .title("Satıştaki Daireler")
             .items([
               S.listItem()
-                .title("Satilik")
+                .title("Satılık")
                 .child(
                   S.documentList()
-                    .title("Satilik Daireler")
+                    .title("Satılık Daireler")
                     .filter('_type == "property" && status == "available"'),
                 ),
               S.listItem()
@@ -78,25 +78,25 @@ export const structure: StructureResolver = (S) =>
                     .filter('_type == "property" && status == "reserved"'),
                 ),
               S.listItem()
-                .title("Satilanlar")
+                .title("Satılanlar")
                 .child(
                   S.documentList()
-                    .title("Satilan Daireler")
+                    .title("Satılan Daireler")
                     .filter('_type == "property" && status == "sold"'),
                 ),
               S.divider(),
               S.listItem()
-                .title("Tum Daireler")
-                .child(S.documentTypeList("property").title("Tum Daireler")),
+                .title("Tüm Daireler")
+                .child(S.documentTypeList("property").title("Tüm Daireler")),
             ]),
         ),
 
       S.listItem()
-        .title("Santiye Guncellemeleri")
+        .title("Şantiye Güncellemeleri")
         .schemaType("constructionUpdate")
         .child(
           S.documentTypeList("constructionUpdate")
-            .title("Santiye Guncellemeleri")
+            .title("Şantiye Güncellemeleri")
             .defaultOrdering([{ field: "updateDate", direction: "desc" }]),
         ),
     ]);

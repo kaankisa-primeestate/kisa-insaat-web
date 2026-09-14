@@ -57,17 +57,17 @@ export function imageQuality(
     const { width, height } = asset.metadata.dimensions;
 
     if (width < minWidth || height < minHeight) {
-      return `Gorsel cozunurlugu yetersiz: ${width}x${height}px. En az ${minWidth}x${minHeight}px olmali. Lutfen daha yuksek cozunurluklu bir dosya yukleyin.`;
+      return `Görsel çözünürlüğü yetersiz: ${width}x${height}px. En az ${minWidth}x${minHeight}px olmalı. Lutfen daha yuksek çözünürlüklü bir dosya yükleyin.`;
     }
 
     if (asset.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-      return `Dosya cok buyuk: ${formatMb(asset.size)} MB. En fazla ${MAX_FILE_SIZE_MB} MB olmali.`;
+      return `Dosya cok büyük: ${formatMb(asset.size)} MB. En fazla ${MAX_FILE_SIZE_MB} MB olmalı.`;
     }
 
     if (checkAspectRatio) {
       const ratio = width / height;
       if (ratio < MIN_ASPECT_RATIO || ratio > MAX_ASPECT_RATIO) {
-        return `Gorsel orani (${ratio.toFixed(2)}:1) tasarim icin uygun degil. Yatay ve 3:2 ile 16:9 arasinda bir gorsel tercih edin.`;
+        return `Görsel orani (${ratio.toFixed(2)}:1) tasarım için uygun değil. Yatay ve 3:2 ile 16:9 arasinda bir görsel tercih edin.`;
       }
     }
 
@@ -83,6 +83,6 @@ export function notInFuture(value: unknown): true | string {
   const today = new Date();
   today.setHours(23, 59, 59, 999);
   return entered > today
-    ? "Gelecek bir tarih girilemez. Sadece gerceklesmis guncellemeler eklenir."
+    ? "Gelecek bir tarih girilemez. Sadece gerçekleşmiş guncellemeler eklenir."
     : true;
 }

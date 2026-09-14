@@ -2,9 +2,9 @@ import { defineField, defineType } from "sanity";
 import { galleryField, imageField } from "../lib/fields";
 
 export const PROPERTY_STATUSES = [
-  { title: "Satilik", value: "available" },
+  { title: "Satılık", value: "available" },
   { title: "Opsiyonlu / Rezerve", value: "reserved" },
-  { title: "Satildi", value: "sold" },
+  { title: "Satıldı", value: "sold" },
 ] as const;
 
 export const ROOM_COUNTS = [
@@ -14,30 +14,30 @@ export const ROOM_COUNTS = [
   "4+1",
   "4+1 Dubleks",
   "5+1 Dubleks",
-  "Ticari / Dukkan",
+  "Ticari / Dükkan",
 ] as const;
 
 export default defineType({
   name: "property",
-  title: "Satistaki Gayrimenkuller",
+  title: "Satıştaki Gayrimenkuller",
   type: "document",
   groups: [
     { name: "genel", title: "Genel Bilgiler", default: true },
-    { name: "olcu", title: "Olculer & Fiyat" },
-    { name: "gorseller", title: "Gorseller" },
+    { name: "olcu", title: "Ölçüler & Fiyat" },
+    { name: "gorseller", title: "Görseller" },
   ],
   fields: [
     defineField({
       name: "title",
-      title: "Daire Basligi",
+      title: "Daire Başlığı",
       type: "string",
       group: "genel",
-      description: 'Ornek: "Ebru Apt. Kat: 4, Daire: 12". 5-70 karakter.',
+      description: 'Örnek: "Ebru Apt. Kat: 4, Daire: 12". 5-70 karakter.',
       validation: (Rule) => Rule.required().min(5).max(70),
     }),
     defineField({
       name: "project",
-      title: "Iliskili Proje",
+      title: "İlişkili Proje",
       type: "reference",
       group: "genel",
       to: [{ type: "project" }],
@@ -46,7 +46,7 @@ export default defineType({
     }),
     defineField({
       name: "status",
-      title: "Satis Durumu",
+      title: "Satış Durumu",
       type: "string",
       group: "genel",
       initialValue: "available",
@@ -55,7 +55,7 @@ export default defineType({
     }),
     defineField({
       name: "roomCount",
-      title: "Oda Sayisi",
+      title: "Oda Sayısı",
       type: "string",
       group: "genel",
       options: { list: [...ROOM_COUNTS] },
@@ -63,24 +63,24 @@ export default defineType({
     }),
     defineField({
       name: "floor",
-      title: "Bulundugu Kat",
+      title: "Bulunduğu Kat",
       type: "string",
       group: "genel",
-      description: 'Ornek: "4. Kat", "Cati Kati", "Zemin"',
+      description: 'Örnek: "4. Kat", "Cati Kati", "Zemin"',
       validation: (Rule) => Rule.required().max(30),
     }),
     defineField({
       name: "featured",
-      title: "Ana Sayfada One Cikar",
+      title: "Ana Sayfada Öne Çıkar",
       type: "boolean",
       group: "genel",
       initialValue: false,
-      description: "Ana sayfadaki one cikan daireler bolumunde gosterilir.",
+      description: "Ana sayfadaki one çıkan daireler bölümünde gösterilir.",
     }),
 
     defineField({
       name: "grossArea",
-      title: "Brut m2",
+      title: "Brüt m2",
       type: "number",
       group: "olcu",
       validation: (Rule) => Rule.required().min(20).max(2000),
@@ -101,7 +101,7 @@ export default defineType({
               return true;
             return value <= gross
               ? true
-              : "Net m2, brut m2'den buyuk olamaz. Degerleri kontrol edin.";
+              : "Net m2, brüt m2'den büyük olamaz. Değerleri kontrol edin.";
           }),
     }),
     defineField({
@@ -109,28 +109,30 @@ export default defineType({
       title: "Fiyat",
       type: "string",
       group: "olcu",
-      initialValue: "Fiyat Icin Iletisime Gecin",
+      initialValue: "Fiyat İçin İletişime Gecin",
       description:
-        'Rakam yazacaksaniz para birimiyle birlikte yazin. Bos birakmayin; fiyat vermek istemiyorsaniz "Fiyat Icin Iletisime Gecin" kalsin.',
+        'Rakam yazacaksaniz para birimiyle birlikte yazın. Boş bırakmayın; fiyat vermek istemiyorsaniz "Fiyat İçin İletişime Gecin" kalsin.',
       validation: (Rule) => Rule.required().max(60),
     }),
 
-    galleryField("images", "Daire Gorselleri", "card", {
+    galleryField("images", "Daire Görselleri", "card", {
+      group: "gorseller",
       min: 1,
       max: 20,
-      description: "En az 1, en fazla 20 gorsel. Ilk gorsel kartta kapak olarak kullanilir.",
+      description: "En az 1, en fazla 20 görsel. Ilk görsel kartta kapak olarak kullanılır.",
     }),
-    imageField("floorPlan", "Kat Plani", "plan", {
-      description: "Opsiyonel. Dikey veya kare olabilir, oran kontrolu uygulanmaz.",
+    imageField("floorPlan", "Kat Planı", "plan", {
+      group: "gorseller",
+      description: "Opsiyonel. Dikey veya kare olabilir, oran kontrolü uygulanmaz.",
     }),
 
     defineField({
       name: "description",
-      title: "Daire Aciklamasi",
+      title: "Daire Açıklaması",
       type: "text",
       rows: 5,
       group: "genel",
-      description: "40-500 karakter. One cikan ozellikleri ve konumu anlatin.",
+      description: "40-500 karakter. One çıkan özellikleri ve konumu anlatın.",
       validation: (Rule) => Rule.required().min(40).max(500),
     }),
   ],

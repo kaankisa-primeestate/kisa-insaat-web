@@ -4,12 +4,12 @@ import { notInFuture } from "../lib/validators";
 
 export default defineType({
   name: "constructionUpdate",
-  title: "Santiye Guncellemeleri",
+  title: "Şantiye Güncellemeleri",
   type: "document",
   fields: [
     defineField({
       name: "project",
-      title: "Iliskili Proje",
+      title: "İlişkili Proje",
       type: "reference",
       to: [{ type: "project" }],
       description: "Bu guncellemenin ait oldugu proje. Zorunlu.",
@@ -17,43 +17,43 @@ export default defineType({
     }),
     defineField({
       name: "updateDate",
-      title: "Guncelleme Tarihi",
+      title: "Güncelleme Tarihi",
       type: "date",
       options: { dateFormat: "YYYY-MM-DD" },
-      description: "Santiyede bu asamanin gerceklestigi tarih. Ileri tarih girilemez.",
+      description: "Santiyede bu aşamanın gerceklestigi tarih. Ileri tarih girilemez.",
       validation: (Rule) => Rule.required().custom(notInFuture),
     }),
     defineField({
       name: "title",
-      title: "Guncelleme Basligi",
+      title: "Güncelleme Başlığı",
       type: "string",
-      description: 'Ornek: "Betonarme Karkas Tamamlandi". 10-80 karakter.',
+      description: 'Örnek: "Betonarme Karkas Tamamlandı". 10-80 karakter.',
       validation: (Rule) => Rule.required().min(10).max(80),
     }),
     defineField({
       name: "description",
-      title: "Aciklama",
+      title: "Açıklama",
       type: "text",
       rows: 4,
-      description: "40-400 karakter. Bu asamada ne yapildigini anlatin.",
+      description: "40-400 karakter. Bu aşamada ne yapıldığını anlatın.",
       validation: (Rule) => Rule.required().min(40).max(400),
     }),
-    galleryField("photos", "Santiye Fotograflari", "card", {
+    galleryField("photos", "Şantiye Fotoğrafları", "card", {
       min: 1,
       max: 12,
-      description: "En az 1, en fazla 12 fotograf. Zaman tunelinde kucuk kartlar halinde gosterilir.",
+      description: "En az 1, en fazla 12 fotoğraf. Zaman tünelinde küçük kartlar halinde gösterilir.",
     }),
     defineField({
       name: "featuredOnHome",
-      title: "Ana Sayfada Goster",
+      title: "Ana Sayfada Göster",
       type: "boolean",
       initialValue: false,
-      description: "Ana sayfadaki son gelismeler bolumunde gosterilir.",
+      description: "Ana sayfadaki son gelismeler bölümünde gösterilir.",
     }),
   ],
   orderings: [
     {
-      title: "Tarihe gore (yeniden eskiye)",
+      title: "Tarihe göre (yeniden eskiye)",
       name: "dateDesc",
       by: [{ field: "updateDate", direction: "desc" }],
     },

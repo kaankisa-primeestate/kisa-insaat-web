@@ -4,7 +4,7 @@ import { IMAGE_RULES, imageQuality } from "./validators";
 type Preset = keyof typeof IMAGE_RULES;
 
 const ALT_DESCRIPTION =
-  "Gorselde ne oldugunu kisaca yazin. Google aramalarinda ve ekran okuyucularda kullanilir.";
+  "Gorselde ne olduğunu kısaca yazın. Google aramalarında ve ekran okuyucularda kullanılır.";
 
 /**
  * Tekil gorsel alani. Hotspot acik oldugu icin odak noktasi panelden isaretlenir
@@ -14,7 +14,7 @@ export function imageField(
   name: string,
   title: string,
   preset: Preset,
-  { required = false, description = "" } = {},
+  { required = false, description = "", group = "" } = {},
 ) {
   const rules = IMAGE_RULES[preset];
   return defineField({
@@ -22,11 +22,12 @@ export function imageField(
     title,
     type: "image",
     description,
+    ...(group ? { group } : {}),
     options: { hotspot: true },
     fields: [
       defineField({
         name: "alt",
-        title: "Gorsel Aciklamasi (Alt Metin)",
+        title: "Görsel Açıklaması (Alt Metin)",
         type: "string",
         description: ALT_DESCRIPTION,
         validation: (Rule) => Rule.required().min(5).max(120),
@@ -49,14 +50,15 @@ export function galleryField(
   name: string,
   title: string,
   preset: Preset,
-  { min = 0, max = 20, description = "" } = {},
+  { min = 0, max = 20, description = "", group = "" } = {},
 ) {
   const rules = IMAGE_RULES[preset];
   return defineField({
     name,
     title,
     type: "array",
-    description: description || `En az ${min}, en fazla ${max} gorsel.`,
+    description: description || `En az ${min}, en fazla ${max} görsel.`,
+    ...(group ? { group } : {}),
     options: { layout: "grid" },
     of: [
       defineArrayMember({
@@ -65,7 +67,7 @@ export function galleryField(
         fields: [
           defineField({
             name: "alt",
-            title: "Gorsel Aciklamasi (Alt Metin)",
+            title: "Görsel Açıklaması (Alt Metin)",
             type: "string",
             description: ALT_DESCRIPTION,
             validation: (Rule) => Rule.required().min(5).max(120),
@@ -76,9 +78,9 @@ export function galleryField(
       }),
     ],
     validation: (Rule) => {
-      const check = Rule.max(max).error(`En fazla ${max} gorsel eklenebilir.`);
+      const check = Rule.max(max).error(`En fazla ${max} görsel eklenebilir.`);
       return min > 0
-        ? check.min(min).error(`En az ${min} gorsel eklemelisiniz.`)
+        ? check.min(min).error(`En az ${min} görsel eklemelisiniz.`)
         : check;
     },
   });

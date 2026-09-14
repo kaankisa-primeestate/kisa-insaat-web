@@ -1,79 +1,118 @@
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Phone, Mail, Globe } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
+import type { SiteSettings } from "@/sanity/types";
+import { formatPhone, telHref } from "@/lib/format";
 
-export default function Footer() {
+const QUICK_LINKS = [
+  { href: "/kurumsal", label: "Hakkımızda" },
+  { href: "/projeler?durum=devam", label: "Devam Eden Projeler" },
+  { href: "/projeler?durum=tamamlanan", label: "Tamamlanan Projeler" },
+  { href: "/satistaki-gayrimenkuller", label: "Satıştaki Daireler" },
+  { href: "/kentsel-donusum", label: "Kentsel Dönüşüm" },
+];
+
+export default function Footer({ settings }: { settings: SiteSettings }) {
+  const socials = [
+    { href: settings.instagram, label: "IG" },
+    { href: settings.linkedin, label: "IN" },
+    { href: settings.facebook, label: "FB" },
+  ].filter((s): s is { href: string; label: string } => Boolean(s.href));
+
   return (
-    <footer className="bg-slate-950 text-slate-400 border-t border-slate-900 pt-16 pb-8">
+    <footer className="bg-slate-950 text-slate-400 border-t border-slate-900 pt-16 pb-8 mt-auto">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-        {/* Kolon 1: Logo ve Kısa Hakkımızda */}
         <div className="space-y-4">
           <Image
             src="/logo-white.png"
-            alt="Kısa İnşaat"
+            alt={settings.companyName}
             width={1046}
             height={197}
             className="h-8 w-auto"
           />
           <p className="text-sm leading-relaxed text-slate-400">
-            Kadıköy Bostancı merkezli, kentsel dönüşüm ve nitelikli konut projelerinde güvenilir, çağdaş ve estetik mimari çözümler sunuyoruz.
+            Türkiye genelinde konut, ticari yapı ve kentsel dönüşüm projeleri
+            üretiyoruz. Mühendislik disiplini ve yüksek malzeme kalitesiyle
+            kalıcı yapılar inşa ediyoruz.
           </p>
-          <div className="flex items-center gap-3 pt-2">
-            <a href="#" className="w-8 h-8 rounded bg-slate-900 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors text-xs font-bold text-slate-300">
-              IG
-            </a>
-            <a href="#" className="w-8 h-8 rounded bg-slate-900 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors text-xs font-bold text-slate-300">
-              IN
-            </a>
-            <a href="#" className="w-8 h-8 rounded bg-slate-900 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors text-xs font-bold text-slate-300">
-              FB
-            </a>
-          </div>
+          {socials.length > 0 && (
+            <div className="flex items-center gap-3 pt-2">
+              {socials.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded bg-slate-900 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors text-xs font-bold text-slate-300"
+                >
+                  {social.label}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
 
-        {/* Kolon 2: Hızlı Menü */}
         <div>
           <h4 className="text-white font-semibold text-sm uppercase tracking-wider mb-4 border-l-2 border-amber-500 pl-3">
             Hızlı Bağlantılar
           </h4>
           <ul className="space-y-2.5 text-sm">
-            <li><Link href="/kurumsal" className="hover:text-amber-500 transition-colors">Hakkımızda</Link></li>
-            <li><Link href="/projeler" className="hover:text-amber-500 transition-colors">Devam Eden Projeler</Link></li>
-            <li><Link href="/projeler" className="hover:text-amber-500 transition-colors">Tamamlanan Projeler</Link></li>
-            <li><Link href="/satistaki-gayrimenkuller" className="hover:text-amber-500 transition-colors">Satıştaki Daireler</Link></li>
-            <li><Link href="/kentsel-donusum" className="hover:text-amber-500 transition-colors">Kentsel Dönüşüm</Link></li>
+            {QUICK_LINKS.map((link) => (
+              <li key={link.label}>
+                <Link
+                  href={link.href}
+                  className="hover:text-amber-500 transition-colors"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
-        {/* Kolon 3: İletişim Bilgileri */}
         <div>
           <h4 className="text-white font-semibold text-sm uppercase tracking-wider mb-4 border-l-2 border-amber-500 pl-3">
-            Ofis & İletişim
+            Ofis &amp; İletişim
           </h4>
           <ul className="space-y-3 text-sm">
-            <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-              <span>Bağdat Caddesi, Bostancı Marmaray Yakını, Kadıköy / İstanbul</span>
-            </li>
-            <li className="flex items-center gap-3">
-              <Phone className="w-4 h-4 text-amber-500 shrink-0" />
-              <span>+90 (216) 000 00 00</span>
-            </li>
-            <li className="flex items-center gap-3">
-              <Mail className="w-4 h-4 text-amber-500 shrink-0" />
-              <span>info@kisainsaat.com</span>
-            </li>
+            {settings.address && (
+              <li className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+                <span>{settings.address}</span>
+              </li>
+            )}
+            {settings.phone && (
+              <li className="flex items-center gap-3">
+                <Phone className="w-4 h-4 text-amber-500 shrink-0" />
+                <a
+                  href={telHref(settings.phone)}
+                  className="hover:text-amber-500 transition-colors"
+                >
+                  {formatPhone(settings.phone)}
+                </a>
+              </li>
+            )}
+            {settings.email && (
+              <li className="flex items-center gap-3">
+                <Mail className="w-4 h-4 text-amber-500 shrink-0" />
+                <a
+                  href={`mailto:${settings.email}`}
+                  className="hover:text-amber-500 transition-colors"
+                >
+                  {settings.email}
+                </a>
+              </li>
+            )}
           </ul>
         </div>
 
-        {/* Kolon 4: Kentsel Dönüşüm / Çağrı */}
         <div className="bg-slate-900/80 p-6 rounded-lg border border-slate-800">
           <h4 className="text-white font-semibold text-sm mb-2">
             Binanızı Yenileyelim
           </h4>
           <p className="text-xs text-slate-400 mb-4 leading-relaxed">
-            Kadıköy bölgesindeki arsanız veya kentsel dönüşüm kapsamındaki binanız için mimari teklif alın.
+            Arsanız veya kentsel dönüşüm kapsamındaki binanız için mimari teklif
+            alın.
           </p>
           <Link
             href="/kentsel-donusum"
@@ -85,8 +124,13 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-slate-900 text-xs text-slate-500 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p>© {new Date().getFullYear()} Kısa İnşaat. Tüm hakları saklıdır.</p>
-        <p className="tracking-wide">Tasarım & Mimari: Modern Kurumsal Çözümler</p>
+        <p>
+          © {new Date().getFullYear()} {settings.companyName}. Tüm hakları
+          saklıdır.
+        </p>
+        <Link href="/studio" className="hover:text-slate-300 transition-colors">
+          Yönetim Paneli
+        </Link>
       </div>
     </footer>
   );
