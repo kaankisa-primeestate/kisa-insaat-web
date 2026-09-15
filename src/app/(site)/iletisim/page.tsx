@@ -18,7 +18,7 @@ export default async function ContactPage() {
         <div className="text-bronze text-xs font-bold uppercase tracking-widest">
           Bize Ulaşın
         </div>
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-fg">
+        <h1 className="font-display text-4xl md:text-5xl font-medium tracking-tight text-fg">
           İletişim Bilgileri
         </h1>
         <p className="text-fg-muted text-base leading-relaxed">

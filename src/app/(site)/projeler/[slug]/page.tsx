@@ -97,7 +97,7 @@ export default async function ProjectDetailPage({ params }: Params) {
               )}
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-fg tracking-tight">
+            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-medium text-fg tracking-tight">
               {project.title}
             </h1>
 

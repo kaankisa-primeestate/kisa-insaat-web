@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Jost } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
 import PaletteSwitcher from "@/components/PaletteSwitcher";
@@ -7,6 +7,17 @@ import { getSiteSettings } from "@/sanity/settings";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+
+/**
+ * Başlık yazı karakteri. Logodaki "KISA" geometrik bir sans; çapraz çizgisi
+ * olmayan sivri apeksli A modernist bir çizgidir. Jost aynı aileden geldiği
+ * için başlıklar logoyla akraba görünür.
+ */
+const jost = Jost({
+  variable: "--font-jost",
+  subsets: ["latin", "latin-ext"],
+  weight: ["300", "400", "500", "600"],
+});
 
 /** Başlık ve açıklama yönetim panelindeki Site Ayarları kaydından gelir. */
 /*
@@ -51,7 +62,7 @@ export default function RootLayout({
   return (
     <html
       lang="tr"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${jost.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

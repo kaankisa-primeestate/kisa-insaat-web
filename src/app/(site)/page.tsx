@@ -20,7 +20,7 @@ export default function Home() {
             <div className="text-bronze text-xs font-bold uppercase tracking-widest">
               Kısa İnşaat Hakkında
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-fg leading-snug">
+            <h2 className="font-display text-3xl md:text-4xl font-medium tracking-tight text-fg leading-snug">
               Türkiye Genelinde Güvenli ve Modern Mimari Standartları
             </h2>
             <p className="text-fg-muted leading-relaxed text-base">
