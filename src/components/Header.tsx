@@ -41,7 +41,7 @@ export default function Header({ settings }: { settings: SiteSettings }) {
           gelir. Bu nedenle yükseklik sabitlenip genişlik serbest bırakılır.
           Logo zaten "KISA" yazdığı için yanında aynı yazı tekrarlanmaz.
         */}
-        <Link href="/" className="flex items-center gap-4 group shrink-0">
+        <Link href="/" className="flex items-center group shrink-0">
           <Image
             src="/logo-white.png"
             alt={settings.companyName}
@@ -52,10 +52,6 @@ export default function Header({ settings }: { settings: SiteSettings }) {
               isScrolled ? "h-7 md:h-8" : "h-8 md:h-10"
             }`}
           />
-          <span className="hidden sm:block w-px h-7 bg-surface-3 group-hover:bg-bronze/60 transition-colors" />
-          <span className="hidden sm:block text-sm font-semibold tracking-[0.22em] text-fg uppercase">
-            İnşaat
-          </span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-fg">
