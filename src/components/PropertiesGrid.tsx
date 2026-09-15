@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Filter, MessageCircle } from "lucide-react";
+import { ChevronDown, Filter, MessageCircle } from "lucide-react";
 import SanityImg from "./SanityImg";
 import type { ListingType, Property, PropertyStatus } from "@/sanity/types";
 import { whatsappHref } from "@/lib/format";
@@ -71,6 +71,47 @@ function PriceBlock({ property }: { property: Property }) {
   );
 }
 
+/**
+ * Kompakt filtre seçimi. Yerel <select> kullanılır: mobilde işletim sisteminin
+ * kendi seçicisini açar, klavye ve ekran okuyucu desteği hazır gelir. Ok işareti
+ * tasarımla uyumlu olsun diye yerel görünüm kapatılıp ikon elle çizilir.
+ */
+function FilterSelect({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: { value: string; label: string }[];
+}) {
+  return (
+    <label className="relative flex items-center gap-2.5 rounded-lg border border-line bg-surface pl-3 pr-9 py-2 focus-within:border-bronze transition-colors cursor-pointer">
+      <span className="text-[10px] uppercase tracking-widest text-fg-dim whitespace-nowrap">
+        {label}
+      </span>
+      <select
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        aria-label={label}
+        className="appearance-none bg-transparent text-sm font-semibold text-fg focus:outline-none cursor-pointer pr-1"
+      >
+        {options.map((option) => (
+          <option key={option.value} value={option.value} className="bg-surface text-fg">
+            {option.label}
+          </option>
+        ))}
+      </select>
+      <ChevronDown
+        className="w-4 h-4 text-fg-dim absolute right-3 pointer-events-none"
+        aria-hidden
+      />
+    </label>
+  );
+}
+
 export default function PropertiesGrid({
   properties,
   whatsapp,
@@ -101,57 +142,48 @@ export default function PropertiesGrid({
   return (
     <>
       {(showTypeFilter || roomOptions.length > 2) && (
-        <div className="bg-surface p-4 rounded-xl border border-line mb-12 space-y-4">
+        <div className="flex flex-wrap items-center gap-3 mb-10 pb-6 border-b border-line">
+          <Filter className="w-4 h-4 text-fg-dim shrink-0" aria-hidden />
+
           {showTypeFilter && (
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-2 text-fg-muted text-xs font-semibold">
-                <Filter className="w-4 h-4 text-fg-dim shrink-0" />
-                <span>İlan Tipi:</span>
-              </div>
-              <div className="flex flex-wrap justify-center gap-2">
-                {TYPE_FILTERS.map((item) => (
-                  <button
-                    key={item.value}
-                    type="button"
-                    onClick={() => setType(item.value)}
-                    aria-pressed={type === item.value}
-                    className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
-                      type === item.value
-                        ? "bg-bronze text-bronze-ink"
-                        : "bg-surface-2 text-fg-muted hover:bg-surface-3"
-                    }`}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <FilterSelect
+              label="İlan tipi"
+              value={type}
+              onChange={(next) => setType(next as "all" | ListingType)}
+              options={TYPE_FILTERS.map((item) => ({
+                value: item.value,
+                label: item.label,
+              }))}
+            />
           )}
 
           {roomOptions.length > 2 && (
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4 border-t border-line pt-4 first:border-0 first:pt-0">
-              <div className="flex items-center gap-2 text-fg-muted text-xs font-semibold">
-                <Filter className="w-4 h-4 text-fg-dim shrink-0" />
-                <span>Oda Sayısı:</span>
-              </div>
-              <div className="flex flex-wrap justify-center gap-2">
-                {roomOptions.map((option) => (
-                  <button
-                    key={option}
-                    type="button"
-                    onClick={() => setRoom(option)}
-                    aria-pressed={room === option}
-                    className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
-                      room === option
-                        ? "bg-bronze text-bronze-ink"
-                        : "bg-surface-2 text-fg-muted hover:bg-surface-3"
-                    }`}
-                  >
-                    {option === "all" ? "Tümü" : option}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <FilterSelect
+              label="Oda sayısı"
+              value={room}
+              onChange={setRoom}
+              options={roomOptions.map((option) => ({
+                value: option,
+                label: option === "all" ? "Tümü" : option,
+              }))}
+            />
+          )}
+
+          <span className="ml-auto text-xs text-fg-dim tabular-nums">
+            {visible.length} ilan
+          </span>
+
+          {(type !== "all" || room !== "all") && (
+            <button
+              type="button"
+              onClick={() => {
+                setType("all");
+                setRoom("all");
+              }}
+              className="text-xs font-semibold text-bronze hover:text-bronze-light transition-colors"
+            >
+              Temizle
+            </button>
           )}
         </div>
       )}
