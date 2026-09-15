@@ -187,12 +187,14 @@ export default defineType({
 
     galleryField("images", "Gayrimenkul Görselleri", "card", {
       group: "gorseller",
+      shape: "Kart görseli yataydır; 3:2 kadraj en iyi oturur.",
       max: 20,
       description:
         "En fazla 20 görsel. İlk görsel kartta kapak olarak kullanılır. Boş bırakılırsa yer tutucu gösterilir; ilan yine de yayınlanır.",
     }),
     imageField("floorPlan", "Kat Planı", "plan", {
       group: "gorseller",
+      shape: "Her oran kabul edilir; dikey de kare de olabilir.",
       description:
         "Opsiyonel. Dikey veya kare olabilir, oran kontrolü uygulanmaz.",
     }),

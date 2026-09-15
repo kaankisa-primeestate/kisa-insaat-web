@@ -39,6 +39,7 @@ export default defineType({
       validation: (Rule) => Rule.required().min(40).max(400),
     }),
     galleryField("photos", "Şantiye Fotoğrafları", "card", {
+      shape: "Yatay kadrajlar en iyi oturur.",
       max: 12,
       description: "En fazla 12 fotoğraf. Zaman tünelinde küçük kartlar halinde gösterilir. Boş bırakılabilir.",
     }),

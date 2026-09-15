@@ -103,11 +103,14 @@ export default defineType({
 
     imageField("mainImage", "Kapak Görseli", "hero", {
       group: "gorseller",
+      shape:
+        "Kart 4:5 dikey orandadır; mimari render'lar en iyi bu kadrajda oturur. Yatay görseller kabul edilir ama kırpılır.",
       description:
         "Proje kartında ve detay sayfasının üstünde kullanılır. Boş bırakılırsa yerine logodan üretilmiş nötr bir yer tutucu gösterilir; proje yine de yayınlanır.",
     }),
     galleryField("gallery", "Görsel Galerisi", "card", {
       group: "gorseller",
+      shape: "Galeri kutuları 4:3 yataydır.",
       max: 24,
       description:
         "Proje detay sayfasindaki galeri. En fazla 24 görsel. Sırası sürükleyerek değiştirilebilir.",

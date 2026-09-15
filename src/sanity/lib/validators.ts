@@ -18,7 +18,7 @@ export const IMAGE_RULES = {
 } as const;
 
 /** 12 MB üstü kaynak dosyalar depolama kotasını hızla tüketir. */
-const MAX_FILE_SIZE_MB = 12;
+export const MAX_FILE_SIZE_MB = 12;
 
 /**
  * Kabul edilen en/boy oranı aralığı. Dikey render'lar (yaklaşık 0.70) ve yatay
