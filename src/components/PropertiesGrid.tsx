@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { ChevronDown, Filter, MessageCircle } from "lucide-react";
 import SanityImg from "./SanityImg";
 import type { ListingType, Property, PropertyStatus } from "@/sanity/types";
@@ -199,8 +200,13 @@ export default function PropertiesGrid({
             return (
               <article
                 key={property._id}
-                className="bg-surface rounded-xl overflow-hidden border border-line hover:border-line-strong transition-all flex flex-col group"
+                className="relative bg-surface rounded-xl overflow-hidden border border-line hover:border-bronze/50 transition-colors flex flex-col group"
               >
+                <Link
+                  href={`/gayrimenkuller/${property.slug}`}
+                  className="absolute inset-0 z-10"
+                  aria-label={`${property.title} ilanının detayını aç`}
+                />
                 <div className="relative h-64 overflow-hidden">
                   <SanityImg
                     image={property.images?.[0]}
@@ -271,7 +277,7 @@ export default function PropertiesGrid({
                         )}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 bg-wa hover:bg-wa-hover text-fg text-xs font-semibold px-4 py-2.5 rounded-lg transition-colors shrink-0"
+                        className="relative z-20 flex items-center gap-1.5 bg-wa hover:bg-wa-hover text-fg text-xs font-semibold px-4 py-2.5 rounded-lg transition-colors shrink-0"
                       >
                         <MessageCircle className="w-4 h-4" />
                         <span>Bilgi Al</span>

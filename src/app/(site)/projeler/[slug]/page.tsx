@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Calendar, CheckCircle2, MapPin, ShieldCheck } from "lucide-react";
 import ConstructionTimeline from "@/components/ConstructionTimeline";
+import ImageGallery from "@/components/ImageGallery";
 import SanityImg from "@/components/SanityImg";
 import { sanityFetch } from "@/sanity/client";
 import { PROJECT_BY_SLUG_QUERY, PROJECT_SLUGS_QUERY } from "@/sanity/queries";
@@ -129,20 +130,7 @@ export default async function ProjectDetailPage({ params }: Params) {
           {project.gallery?.length > 0 && (
             <section className="space-y-4 pt-6 border-t border-line">
               <h2 className="text-xl font-bold text-fg">Görsel Galerisi</h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {project.gallery.map((image, index) => (
-                  <div
-                    key={index}
-                    className="relative aspect-4/3 rounded-lg overflow-hidden border border-line"
-                  >
-                    <SanityImg
-                      image={image}
-                      sizes="(max-width: 768px) 50vw, 33vw"
-                      width={900}
-                    />
-                  </div>
-                ))}
-              </div>
+              <ImageGallery images={project.gallery} alt={project.title} />
             </section>
           )}
 

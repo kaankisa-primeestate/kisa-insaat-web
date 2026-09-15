@@ -51,6 +51,8 @@ export type ProjectDetail = ProjectSummary & {
 
 export type Property = {
   _id: string;
+  /** slug.current yoksa belgenin kendi kimliği kullanılır. */
+  slug: string;
   title: string;
   projectTitle?: string;
   listingType: ListingType;
@@ -66,4 +68,9 @@ export type Property = {
   images: SanityImage[];
   floorPlan?: SanityImage;
   featured: boolean;
+};
+
+export type PropertyDetail = Property & {
+  projectSlug?: string;
+  projectLocation?: string;
 };

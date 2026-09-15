@@ -47,8 +47,35 @@ export const PROJECT_BY_SLUG_QUERY = `*[_type == "project" && slug.current == $s
 export const ALL_PROPERTIES_QUERY = `*[_type == "property"]
   | order(select(status == "available" => 0, status == "reserved" => 1, 2) asc, _createdAt desc) {
   _id,
+  "slug": coalesce(slug.current, _id),
   title,
   "projectTitle": project->title,
+  listingType,
+  status,
+  roomCount,
+  grossArea,
+  netArea,
+  floor,
+  salePrice,
+  rentPrice,
+  dues,
+  description,
+  images[] ${IMAGE},
+  floorPlan ${IMAGE},
+  featured
+}`;
+
+export const PROPERTY_SLUGS_QUERY = `*[_type == "property"]{
+  "slug": coalesce(slug.current, _id)
+}.slug`;
+
+export const PROPERTY_BY_SLUG_QUERY = `*[_type == "property" && (slug.current == $slug || _id == $slug)][0]{
+  _id,
+  "slug": coalesce(slug.current, _id),
+  title,
+  "projectTitle": project->title,
+  "projectSlug": project->slug.current,
+  "projectLocation": project->location,
   listingType,
   status,
   roomCount,

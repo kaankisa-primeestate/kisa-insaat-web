@@ -50,6 +50,15 @@ export default defineType({
       validation: (Rule) => Rule.required().min(5).max(70),
     }),
     defineField({
+      name: "slug",
+      title: "URL Bağlantısı",
+      type: "slug",
+      group: "genel",
+      description:
+        "İlan başlığından otomatik üretilir. Boş bırakılabilir; o durumda sistem kendi kimliğini kullanır. Yayına alındıktan sonra değiştirmeyin, eski bağlantılar kırılır.",
+      options: { source: "title", maxLength: 70 },
+    }),
+    defineField({
       name: "project",
       title: "İlişkili Proje",
       type: "reference",
