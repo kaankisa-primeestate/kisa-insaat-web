@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Menu, MessageCircle, Phone, X } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 import type { SiteSettings } from "@/sanity/types";
 import { formatPhone, telHref, whatsappHref } from "@/lib/format";
 
@@ -47,7 +48,7 @@ export default function Header({ settings }: { settings: SiteSettings }) {
             width={1046}
             height={197}
             priority
-            className={`w-auto transition-all duration-300 ${
+            className={`logo-adaptive w-auto transition-all duration-300 ${
               isScrolled ? "h-7 md:h-8" : "h-8 md:h-10"
             }`}
           />
@@ -69,7 +70,8 @@ export default function Header({ settings }: { settings: SiteSettings }) {
           ))}
         </nav>
 
-        <div className="hidden lg:flex items-center gap-4 shrink-0">
+        <div className="hidden lg:flex items-center gap-3 shrink-0">
+          <ThemeToggle />
           {settings.whatsapp && (
             <a
               href={whatsappHref(settings.whatsapp)}
@@ -92,15 +94,22 @@ export default function Header({ settings }: { settings: SiteSettings }) {
           )}
         </div>
 
-        <button
-          type="button"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label={mobileMenuOpen ? "Menüyü kapat" : "Menüyü aç"}
-          aria-expanded={mobileMenuOpen}
-          className="md:hidden text-fg p-2 focus:outline-none"
-        >
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        <div className="flex items-center gap-2 lg:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? "Menüyü kapat" : "Menüyü aç"}
+            aria-expanded={mobileMenuOpen}
+            className="md:hidden text-fg p-2 focus:outline-none"
+          >
+            {mobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
+          </button>
+        </div>
       </div>
 
       {mobileMenuOpen && (

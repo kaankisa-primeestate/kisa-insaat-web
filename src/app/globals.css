@@ -101,6 +101,92 @@
   --color-planned: #94a8b3;
 }
 
+/* ===========================================================================
+ * GÜNDÜZ MODU
+ *
+ * Nötr tonlar ters çevrilmiştir. Anlam taşıyan renkler (WhatsApp yeşili,
+ * "planlanan" tonu) ve vurgu renkleri ters çevrilmez — açık zeminde okunacak
+ * şekilde ayrıca seçilmiştir. Zeminler saf beyaz değil, kırık beyazdır;
+ * saf beyaz uzun metinde gözü yorar.
+ * =========================================================================== */
+
+/* Taş & Bronz — gündüz */
+:root[data-tema="gunduz"] {
+  --color-ground: #f6f2ec;
+  --color-surface: #ffffff;
+  --color-surface-2: #efe9e0;
+  --color-surface-3: #e4dcd0;
+  --color-line: #e2dbd0;
+  --color-line-strong: #c9bfb0;
+  --color-fg: #1c1814;
+  --color-fg-muted: #4f4840;
+  --color-fg-dim: #6f665b;
+  --color-bronze: #806036;
+  --color-bronze-light: #6f5430;
+  --color-bronze-strong: #6b5029;
+  --color-bronze-deep: #5e4726;
+  --color-bronze-dark: #4a3720;
+  --color-bronze-ink: #fdfbf7;
+  --color-wa: #2a6046;
+  --color-wa-hover: #22503a;
+  --color-wa-text: #1f5138;
+  --color-planned: #4a5a63;
+}
+
+/* Grafit & Kireç — gündüz */
+:root[data-palet="grafit"][data-tema="gunduz"] {
+  --color-ground: #f7f6f3;
+  --color-surface: #ffffff;
+  --color-surface-2: #efeeea;
+  --color-surface-3: #e5e3de;
+  --color-line: #e0ded8;
+  --color-line-strong: #c6c3bb;
+  --color-fg: #161615;
+  --color-fg-muted: #4e4d49;
+  --color-fg-dim: #6e6c66;
+  --color-bronze: #1d1d1b;
+  --color-bronze-light: #33322e;
+  --color-bronze-strong: #000000;
+  --color-bronze-deep: #3c3b37;
+  --color-bronze-dark: #545350;
+  --color-bronze-ink: #f7f6f3;
+  --color-wa: #2a6046;
+  --color-wa-hover: #22503a;
+  --color-wa-text: #1f5138;
+  --color-planned: #465359;
+}
+
+/* Derin Yeşil & Pirinç — gündüz */
+:root[data-palet="yesil"][data-tema="gunduz"] {
+  --color-ground: #f2f5f2;
+  --color-surface: #ffffff;
+  --color-surface-2: #e6ece7;
+  --color-surface-3: #d8e1da;
+  --color-line: #dde5df;
+  --color-line-strong: #bfcdc4;
+  --color-fg: #101a15;
+  --color-fg-muted: #3f4c45;
+  --color-fg-dim: #5e6d64;
+  --color-bronze: #7a6224;
+  --color-bronze-light: #63501d;
+  --color-bronze-strong: #665220;
+  --color-bronze-deep: #52411a;
+  --color-bronze-dark: #3f3213;
+  --color-bronze-ink: #fbfaf5;
+  --color-wa: #2a6046;
+  --color-wa-hover: #22503a;
+  --color-wa-text: #1f5138;
+  --color-planned: #47585f;
+}
+
+/*
+ * Logo saf beyaz bir çizimdir; gündüz modunda açık zeminde kaybolur.
+ * Alfa kanalı korunarak siyaha çevrilir, ayrı dosya gerekmez.
+ */
+:root[data-tema="gunduz"] .logo-adaptive {
+  filter: invert(1);
+}
+
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);

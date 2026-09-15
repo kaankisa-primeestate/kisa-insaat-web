@@ -36,7 +36,7 @@ function Placeholder() {
         alt=""
         width={258}
         height={195}
-        className="w-1/3 max-w-[120px] h-auto opacity-10"
+        className="logo-adaptive w-1/3 max-w-[120px] h-auto opacity-10"
       />
     </div>
   );

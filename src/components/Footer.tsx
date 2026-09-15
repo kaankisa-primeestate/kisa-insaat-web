@@ -28,7 +28,7 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
             alt={settings.companyName}
             width={1046}
             height={197}
-            className="h-8 w-auto"
+            className="logo-adaptive h-8 w-auto"
           />
           <p className="text-sm leading-relaxed text-fg-muted">
             Türkiye genelinde konut, ticari yapı ve kentsel dönüşüm projeleri

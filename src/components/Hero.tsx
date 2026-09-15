@@ -15,12 +15,12 @@ const SLIDE_INTERVAL_MS = 7000;
 function DesignedBackdrop() {
   return (
     <div className="absolute inset-0" aria-hidden>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_25%_15%,#2a241d_0%,#1b1712_45%,#14110e_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_25%_15%,var(--color-surface-3)_0%,var(--color-surface)_45%,var(--color-ground)_100%)]" />
       <div
         className="absolute inset-0 opacity-[0.10]"
         style={{
           backgroundImage:
-            "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+            "linear-gradient(var(--color-fg) 1px, transparent 1px), linear-gradient(90deg, var(--color-fg) 1px, transparent 1px)",
           backgroundSize: "72px 72px",
         }}
       />
@@ -30,7 +30,7 @@ function DesignedBackdrop() {
           alt=""
           width={258}
           height={195}
-          className="w-full h-auto"
+          className="logo-adaptive w-full h-auto"
           priority
         />
       </div>
@@ -95,7 +95,7 @@ export default function Hero({ images = [] }: { images?: HeroImage[] }) {
         aria-hidden
         style={{
           background:
-            "radial-gradient(ellipse 75% 55% at 50% 45%, transparent 0%, rgba(20,17,14,0.62) 100%)",
+            "radial-gradient(ellipse 75% 55% at 50% 45%, transparent 0%, color-mix(in srgb, var(--color-ground) 62%, transparent) 100%)",
         }}
       />
 
@@ -106,12 +106,12 @@ export default function Hero({ images = [] }: { images?: HeroImage[] }) {
           <span>Kadıköy Bostancı&apos;nın Prestijli Yapıları</span>
         </div>
 
-        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6 font-sans drop-shadow-[0_2px_24px_rgba(20,17,14,0.92)]">
+        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6 font-sans">
           Geleceği İnşa Ediyoruz, <br />
           <span className="text-bronze-light">Kalıcı Değerler</span> Sunuyoruz.
         </h1>
 
-        <p className="text-lg md:text-xl text-fg max-w-2xl mx-auto mb-10 leading-relaxed font-light drop-shadow-[0_2px_12px_rgba(20,17,14,0.92)]">
+        <p className="text-lg md:text-xl text-fg-muted max-w-2xl mx-auto mb-10 leading-relaxed font-light">
           Kısa İnşaat güvencesiyle Bostancı ve çevresinde modern mimari, yüksek
           deprem güvenliği ve estetik yaşam alanları üretiyoruz.
         </p>

@@ -9,6 +9,16 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 /** Başlık ve açıklama yönetim panelindeki Site Ayarları kaydından gelir. */
+/*
+ * Tema, sayfa boyanmadan önce uygulanır. Aksi hâlde gündüz modunu seçmiş bir
+ * ziyaretçi her açılışta bir anlık koyu ekran görür.
+ */
+const TEMA_SCRIPT = `(function(){try{
+var t=localStorage.getItem("tema");
+if(!t){t=window.matchMedia("(prefers-color-scheme: light)").matches?"gunduz":"gece";}
+if(t==="gunduz"){document.documentElement.dataset.tema="gunduz";}
+}catch(e){}})();`;
+
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
   return {
@@ -42,7 +52,11 @@ export default function RootLayout({
     <html
       lang="tr"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: TEMA_SCRIPT }} />
+      </head>
       <body className="min-h-full bg-ground text-fg font-sans">
         {children}
         <Suspense fallback={null}>
