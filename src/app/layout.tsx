@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Jost } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
 import PaletteSwitcher from "@/components/PaletteSwitcher";
@@ -8,18 +8,6 @@ import { getSiteSettings } from "@/sanity/settings";
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
-/**
- * Başlık yazı karakteri. Logodaki "KISA" geometrik bir sans; çapraz çizgisi
- * olmayan sivri apeksli A modernist bir çizgidir. Jost aynı aileden geldiği
- * için başlıklar logoyla akraba görünür.
- */
-const jost = Jost({
-  variable: "--font-jost",
-  subsets: ["latin", "latin-ext"],
-  weight: ["300", "400", "500", "600"],
-});
-
-/** Başlık ve açıklama yönetim panelindeki Site Ayarları kaydından gelir. */
 /*
  * Tema, sayfa boyanmadan önce uygulanır. Aksi hâlde gündüz modunu seçmiş bir
  * ziyaretçi her açılışta bir anlık koyu ekran görür.
@@ -30,6 +18,7 @@ if(!t){t=window.matchMedia("(prefers-color-scheme: light)").matches?"gunduz":"ge
 if(t==="gunduz"){document.documentElement.dataset.tema="gunduz";}
 }catch(e){}})();`;
 
+/** Başlık ve açıklama yönetim panelindeki Site Ayarları kaydından gelir. */
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
   return {
@@ -62,7 +51,7 @@ export default function RootLayout({
   return (
     <html
       lang="tr"
-      className={`${geistSans.variable} ${geistMono.variable} ${jost.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

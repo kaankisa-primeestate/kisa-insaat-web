@@ -101,22 +101,14 @@ export default function Hero({ images = [] }: { images?: HeroImage[] }) {
 
       {/* Icerik */}
       <div className="relative max-w-5xl mx-auto px-6 text-center text-fg z-10 py-24">
-        {/*
-          İki ağırlık bir arada: ince kesim sakin bir giriş yapar, orta kalınlık
-          vurguyu taşır. Aynı karakterin iki kesimi olduğu için çelişki değil,
-          kontrast oluşturur.
-        */}
-        <h1 className="font-display text-5xl md:text-7xl tracking-tight leading-[1.08] mb-8">
-          <span className="block font-light text-fg">Sağlam Yapı,</span>
-          <span className="block font-medium text-bronze-light">
-            Kalıcı Değer.
-          </span>
+        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6 font-sans">
+          Geleceği İnşa Ediyoruz, <br />
+          <span className="text-bronze-light">Kalıcı Değerler</span> Sunuyoruz.
         </h1>
 
         <p className="text-lg md:text-xl text-fg-muted max-w-2xl mx-auto mb-10 leading-relaxed font-light">
-          Türkiye genelinde konut, ticari yapı ve kentsel dönüşüm projeleri
-          üretiyoruz. Her projede güncel deprem yönetmeliğine tam uyum, yüksek
-          malzeme kalitesi ve zamanında teslim standarttır.
+          Kısa İnşaat güvencesiyle modern mimari, yüksek deprem güvenliği ve
+          estetik yaşam alanları üretiyoruz.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
